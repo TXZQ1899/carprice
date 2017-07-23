@@ -1,35 +1,62 @@
-package com.askprice.carprice.dto;
+package com.askprice.carprice.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.io.Serializable;
 
-//@JsonIgnoreProperties(ignoreUnknown = true)
-public class CarDealer {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "car_dealer")
+public class CarDealer implements Serializable  {
+	
+	private static final long serialVersionUID = 1L;
+
+	@Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name = "id")
+	private Long Id;
+	
+	@Column(name = "bizMode")
 	private String bizMode;
 	
+	@Column(name = "dealerId")
 	private Long dealerId;
 	
+	@Column(name = "dealerShortName")
 	private String dealerShortName;
 	
+	@Column(name = "minPrice")
 	private Double minPrice;
 	
+	@Column(name = "maxPrice")
 	private Double maxPrice;
 	
+	@Column(name = "tel400")
 	private String tel400;
 	
+	@Column(name = "saleRange")
 	private String saleRange;
 	
+	@Column(name = "address")
 	private String address;
 	
+	@Column(name = "longitude")
 	private Double longitude;
 	
+	@Column(name = "latitude")
 	private Double latitude;
 	
+	@Column(name = "newsTitle")
 	private String newsTitle;
 	
+	@Column(name = "newsUrl")
 	private String newsUrl;
 	
+	@Column(name = "newsRemainingDays")
 	private Integer newsRemainingDays;
 
 	public String getBizMode() {
@@ -135,6 +162,14 @@ public class CarDealer {
 
 	public void setLatitude(Double latitude) {
 		this.latitude = latitude;
+	}
+
+	public Long getId() {
+		return Id;
+	}
+
+	public void setId(Long id) {
+		Id = id;
 	}
 
 	@Override

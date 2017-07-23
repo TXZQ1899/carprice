@@ -1,7 +1,6 @@
 package com.askprice.carprice.common.util;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,20 +11,17 @@ import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
 import org.apache.http.ParseException;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URLEncodedUtils;
-import org.apache.http.impl.DefaultBHttpClientConnectionFactory;
 import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
-import com.askprice.carprice.dto.CarDealer;
+import com.askprice.carprice.entity.CarDealer;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -66,6 +62,7 @@ public class RemoteAPIProxy {
 		
 		JavaType javaType = getCollectionType(mapper, ArrayList.class, CarDealer.class); 
 		try {
+			@SuppressWarnings("unchecked")
 			List<CarDealer> list =  (List<CarDealer>)mapper.readValue(responseBody, javaType);
 			list.forEach(dealer -> System.out.println(dealer.toString()));
 		} catch (IOException e) {
