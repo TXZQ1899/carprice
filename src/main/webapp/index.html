@@ -1,0 +1,256 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<meta content="yes" name="apple-mobile-web-app-capable" />
+		<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+		<title>奥迪 奥迪A6L_咨询最底价</title>
+		<!-- 线上 -->
+		<link rel="stylesheet" type="text/css" href="css/main.css" />
+		<link rel="stylesheet" type="text/css" href="css/haf.css" />
+		<!--线上样式-->
+		<style type="text/css">
+			.Sideslip_hd {
+				animation: Sideslip_hd 0.6s;
+				-moz-animation: Sideslip_hd 0.6s;
+				/* Firefox */
+				-webkit-animation: Sideslip_hd 0.6s;
+				/* Safari and Chrome */
+				-o-animation: Sideslip_hd 0.6s;
+				/* Opera */
+				animation-fill-mode: both;
+				-moz-animation-fill-mode: both;
+				-webkit-animation-fill-mode: both;
+				-o-animation-fill-mode: both;
+			}
+			
+			.Sideslip_hd02 {
+				animation: Sideslip_hd02 0.6s;
+				-moz-animation: Sideslip_hd02 0.6s;
+				/* Firefox */
+				-webkit-animation: Sideslip_hd02 0.6s;
+				/* Safari and Chrome */
+				-o-animation: Sideslip_hd02 0.6s;
+				/* Opera */
+				animation-fill-mode: both;
+				-moz-animation-fill-mode: both;
+				-webkit-animation-fill-mode: both;
+				-o-animation-fill-mode: both;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="ask-box nomedia">
+			<header>
+				<h2>询&nbsp;价</h2>
+			</header>
+			<div class="con_top_bg"></div>
+			<div class="ask-price old">
+				<strong class="title"><em class="newsline"></em>奥迪 奥迪A6L_咨询最底价</strong>
+				<ul class="register">
+					<li data-action="firstmodels" data-id="3152" id="showa">
+						<a href="javascript:void(0);">
+							<label>当前车型：</label>
+							<strong id="rCurrentCarName" data-id="118573" class="gry">请选择车型</strong>
+                            <em class="frist-select"></em>
+						</a>
+					</li>
+					<li>
+						<label>姓<em class="w28"></em>名：</label>
+						<input id="inName" name="name" type="text" placeholder="请输入您的姓名" value="" />
+					</li>
+					<li>
+						<label>手<em class="w6"></em>机<em class="w6"></em>号：</label>
+						<input id="inPhone" name="phone" type="tel" class="current" placeholder="请输入您的手机号" maxlength="11" />
+					</li>
+					<li data-action="province" id="provin">
+
+						<a href="javascript:void(0);" class="fl"><label>城<em class="w28"></em>市：</label>
+                        <em class="frist-select"></em></a>
+						<a href="javascript:void(0);" class="province cityname fl gry" id="choicecity" ></a>
+						<div hidden="true" id="choicecitycode"></div>
+						
+
+					</li>
+
+				</ul>
+				<div class="subinpt">
+					<input type="checkbox" class="infchek" id="check2"><label for="check2"></label>
+					<i>我同意</i>
+					<a href="static/homeCarAlert/anquan.html">《个人信息保护申明》</a>
+				</div>
+				
+				<strong class="title" id="dealerRefer">推荐经销商（已选<em id="countNumber" class="font-red">0</em>家）</strong>
+        <ul class="dealer-list" id="topDealers">
+        
+        </ul>
+        <ul class="dealer-list" id="MoretopDealers"></ul>
+        <div class="lnk-more" id="hideToggle">
+        	<!--展开全部-->
+            <a href="javascript:;" id="arrow" data-token="close">展开全部<span class="arrow_down"></span></a>
+            <a href="javascript:;" id="arrowup" data-token="close" style='display:none'>收起全部<span class="arrow_down up"></span></a>
+            
+            
+            <a href="javascript:;" id="jinxiaoshan" data-token="close" style='display:none'><span class="jinxiaoshan_down">本地没有经销商</span></a>
+            
+        </div>
+        <div class="message-failure" id="loadfail" style="display:none;">
+            <img src="imags/failure.png" />
+            <p>没有合适的经销商，看看其它车型吧！</p>
+        </div>
+				
+			<div class="line-box" id="seprateline" style="display:none;">
+				<i></i>
+			</div>
+
+		</div>
+		<div class="flex-bottom old">
+			<div class="warp">
+				<button id="submitOrder" class="submit remove-margin-top">
+        <a href="javascript:void(0);">咨询底价</a></button>
+			</div>
+		</div>
+		<div id="codemask" style="display:none" class="mask"></div>
+		<div class="jump-pop" id="pagemessage" style="display: none;">
+			<span></span>
+		</div>
+<form action="" method="post" id="homeCitys">
+<!-- 隐藏数据 -->
+<input type="hidden" id="channel" name="channel" value="SY001" />
+<input type="hidden" id="appsku" name="appsku" value="h5_sy" />
+<input type="hidden" id="zt" name="zt" value="AT0173" />
+<input type="hidden" id="key" name="key" value="" />
+<input type="hidden" id="carId" name="carId" value="" />
+
+<input type="hidden" id="gs_name" name="gs_name" value="" />
+<input type="hidden" id="gs_phone" name="gs_phone" value="" />
+
+<input type="submit" id="submit" hidden="hidden"/>
+</form>
+
+
+<!--地址-->
+
+<!--地址-->
+<div id="none">
+    <div class="province02 leftmask" style="display:none;" onclick="" id="province"></div>
+</div>
+<div class="province03 Sideslip_hd leftPopup" style="display:none;-webkit-overflow-scrolling:touch;overflow-y:scroll;z-index:999;" id="province1">
+    <dl>
+        <dt><span>A</span></dt>
+        <dd><a href="###" onclick="$._right.getCity(1,'安徽省');return false;" data-action="popup-city2" data-next="true" data-id="1" class="current"><p>安徽省</p></a></dd>
+        <dt><span>B</span></dt>
+        <dd><a onclick="javascript:$._right.getCity(201,'北京');return false;" class="nbg" data-id="201"><p>北京</p></a></dd>
+        <dt><span>C</span></dt><dd><a onclick="javascript:$._right.getCity(3101,'重庆');return false;" class="nbg" data-id="3101"><p>重庆</p></a></dd>
+        <dt><span>F</span></dt>
+        <dd><a href="###" onclick="$._right.getCity(3,'福建省');return false;" data-action="popup-city2" data-next="true" data-id="3"><p>福建省</p></a></dd>
+        <dt><span>G</span></dt><dd><a href="###" onclick="$._right.getCity(4,'甘肃省');return false;" data-action="popup-city2" data-next="true" data-id="4"><p>甘肃省</p></a></dd>
+        <dd><a href="###" onclick="$._right.getCity(5,'广东省');return false;" data-action="popup-city2" data-next="true" data-id="5"><p>广东省</p></a></dd>
+        <dd><a href="###" onclick="$._right.getCity(6,'广西壮族自治区');return false;" data-action="popup-city2" data-next="true" data-id="6"><p>广西壮族自治区</p></a></dd>
+        <dd><a href="###" onclick="$._right.getCity(7,'贵州省');return false;" data-action="popup-city2" data-next="true" data-id="7"><p>贵州省</p></a></dd>
+        <dt><span>H</span></dt><dd><a href="###" onclick="$._right.getCity(8,'海南省');return false;" data-action="popup-city2" data-next="true" data-id="8"><p>海南省</p></a></dd>
+        <dd><a href="###" onclick="$._right.getCity(9,'河北省');return false;" data-action="popup-city2" data-next="true" data-id="9"><p>河北省</p></a></dd>
+        <dd><a href="###" onclick="$._right.getCity(11,'黑龙江省');return false;" data-action="popup-city2" data-next="true" data-id="11"><p>黑龙江省</p></a></dd>
+        <dd><a href="###" onclick="$._right.getCity(10,'河南省');return false;" data-action="popup-city2" data-next="true" data-id="10"><p>河南省</p></a></dd>
+        <dd><a href="###" onclick="$._right.getCity(12,'湖北省');return false;" data-action="popup-city2" data-next="true" data-id="12"><p>湖北省</p></a></dd>
+        <dd><a href="###" onclick="$._right.getCity(13,'湖南省');return false;" data-action="popup-city2" data-next="true" data-id="13"><p>湖南省</p></a></dd>
+        <dt><span>J</span></dt><dd><a href="###" onclick="$._right.getCity(15,'江苏省');return false;" data-action="popup-city2" data-next="true" data-id="15"><p>江苏省</p></a></dd>
+        <dd><a href="###" onclick="$._right.getCity(16,'江西省');return false;" data-action="popup-city2" data-next="true" data-id="16"><p>江西省</p></a></dd><dd><a href="###" onclick="$._right.getCity(14,'吉林省');return false;" data-action="popup-city2" data-next="true" data-id="14"><p>吉林省</p></a></dd>
+        <dt><span>L</span></dt>
+        <dd><a href="###" onclick="$._right.getCity(17,'辽宁省');return false;" data-action="popup-city2" data-next="true" data-id="17"><p>辽宁省</p></a></dd>
+        <dt><span>N</span></dt><dd><a href="###" onclick="$._right.getCity(18,'内蒙古自治区');return false;" data-action="popup-city2" data-next="true" data-id="18"><p>内蒙古自治区</p></a></dd>
+        <dd><a href="###" onclick="$._right.getCity(19,'宁夏回族自治区');return false;" data-action="popup-city2" data-next="true" data-id="19"><p>宁夏回族自治区</p></a></dd>
+        <dt><span>Q</span></dt><dd><a href="###" onclick="$._right.getCity(20,'青海省');return false;" data-action="popup-city2" data-next="true" data-id="20"><p>青海省</p></a></dd>
+        <dt><span>S</span></dt>
+        <dd><a href="###" onclick="$._right.getCity(23,'陕西省');return false;" data-action="popup-city2" data-next="true" data-id="23"><p>陕西省</p></a></dd>
+        <dd><a href="###" onclick="$._right.getCity(21,'山东省');return false;" data-action="popup-city2" data-next="true" data-id="21"><p>山东省</p></a></dd>
+        <dd><a onclick="javascript:$._right.getCity(2401,'上海');return false;" class="nbg" data-id="2401"><p>上海</p></a></dd><dd><a href="###" onclick="$._right.getCity(22,'山西省');return false;" data-action="popup-city2" data-next="true" data-id="22"><p>山西省</p></a></dd>
+        <dd><a href="###" onclick="$._right.getCity(25,'四川省');return false;" data-action="popup-city2" data-next="true" data-id="25"><p>四川省</p></a></dd>
+        <dt><span>T</span></dt>
+        <dd><a onclick="javascript:$._right.getCity(2601,'天津');return false;" class="nbg" data-id="2601"><p>天津</p></a></dd>
+        <dt><span>X</span></dt>
+        <dd><a href="###" onclick="$._right.getCity(28,'新疆维吾尔自治区');return false;" data-action="popup-city2" data-next="true" data-id="28"><p>新疆维吾尔自治区</p></a></dd>
+        <dd><a href="###" onclick="$._right.getCity(27,'西藏自治区');return false;" data-action="popup-city2" data-next="true" data-id="27"><p>西藏自治区</p></a></dd>
+        <dt><span>Y</span></dt>
+        <dd><a href="###" onclick="$._right.getCity(29,'云南省');return false;" data-action="popup-city2" data-next="true" data-id="29"><p>云南省</p></a></dd>
+        <dt><span>Z</span></dt>
+        <dd><a href="###" onclick="$._right.getCity(30,'浙江省');return false;" data-action="popup-city2" data-next="true" data-id="30"><p>浙江省</p></a></dd>
+    </dl>
+</div>
+
+<div id="listnone">
+    <div class="cityinfo02" style="display:none;" onclick="" id="cityinfo"></div>
+</div>
+<div class="cityinfo03 Sideslip_hd" style="display:none;" id="cityinfo1">
+    <h3><a href="javascript:void(0);" id="pr-name">省份</a></h3>
+    <ul>
+    </ul>
+</div>
+</div>
+
+<!--经销商-->
+<div id="hide">
+    <div class="Sideslip02 leftmask" style="display:none;" onclick="" id="sycabc"></div>
+</div>
+<div class="Sideslip03 Sideslip_hd" style="display:none;-webkit-overflow-scrolling:touch;overflow-y:scroll;" id="sycabc1">
+    <div class="hotcar_jxs">
+    <div class="hotcar_jxs_bt">奔驰GLA级</div>
+    <ul id="jxs-ul" style="height: 100%;">
+    
+	</ul>
+	</div>
+</div>
+<!--隐藏的车款id-->
+<input type="hidden" id="serialId" name="serialId" value="4477" />
+<!--判断是否提交日志的参数 -->
+<input type="hidden" id="rz" name="rz" value="" />
+<input type="hidden" id="pageType" name="pageType" value="bcgla" />
+    <!--输入不正确提示框-->
+    <div class="models_balloon" id="models_balloon" style="display: none;">名字只能是纯汉字或纯字母</div>
+</body>
+</html>
+
+
+<script src="js/jquery-1.8.0.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="js/hf.js"></script>
+<script type="text/javascript" src="js/right.js"></script>
+<script type="text/javascript" src="js/sms.js"></script>
+
+<script type="text/javascript">
+
+     function GetRequest() {
+	   var url = location.search; //获取url中"?"符后的字串
+	   var theRequest = new Object();
+	   if (url.indexOf("?") != -1) {
+	      var str = url.substr(1);
+	      strs = str.split("&");
+	      for(var i = 0; i < strs.length; i ++) {
+	         theRequest[strs[i].split("=")[0]]=unescape(strs[i].split("=")[1]);
+	      }
+	   }
+	   return theRequest;
+	}
+
+$(function(){
+	//alert("奔驰GLA级");
+	// 获取车型
+	// getCarInfo("4477", "124769");
+	// 定位
+	// serialId=4477&carId=124769&brand=奔驰&channel=SY001&appsku=h5_sy&pageType=bcgla&zt=AT0173#flag
+	var requestParams = new Object();
+	requestParams = GetRequest();
+	var serialId,carId,brand,channel,appsku,pageType,zt;
+	serialId = requestParams['serialId'];
+	carId = requestParams['carId'];
+	brand = requestParams['brand'];
+	channel = requestParams['channel'];
+	appsku = requestParams['appsku'];
+	pageType = requestParams['pageType'];
+	zt = requestParams['zt'];
+	getCarInfo(serialId, carId);
+	getLocation();
+});
+</script>

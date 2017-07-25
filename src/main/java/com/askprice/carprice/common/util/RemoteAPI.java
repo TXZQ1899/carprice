@@ -10,8 +10,7 @@ public class RemoteAPI {
 	
 	public static enum APIOperation
 	{
-		recommend_dealers_csid,
-		
+		recommend_dealers_csid,recommend_dealers_carid;
 	}
 	
 	public static enum CommonParams

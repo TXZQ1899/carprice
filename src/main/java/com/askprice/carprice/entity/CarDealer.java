@@ -35,6 +35,12 @@ public class CarDealer implements Serializable  {
 	@Column(name = "maxPrice")
 	private Double maxPrice;
 	
+	@Column(name = "vendorPrice")
+	private Double vendorPrice;
+	
+	@Column(name = "promotePrice")
+	private Double promotePrice;
+	
 	@Column(name = "tel400")
 	private String tel400;
 	
@@ -170,6 +176,22 @@ public class CarDealer implements Serializable  {
 
 	public void setId(Long id) {
 		Id = id;
+	}
+
+	public Double getVendorPrice() {
+		return vendorPrice;
+	}
+
+	public void setVendorPrice(Double vendorPrice) {
+		this.vendorPrice = vendorPrice;
+	}
+
+	public Double getPromotePrice() {
+		return promotePrice;
+	}
+
+	public void setPromotePrice(Double promotePrice) {
+		this.promotePrice = promotePrice;
 	}
 
 	@Override
