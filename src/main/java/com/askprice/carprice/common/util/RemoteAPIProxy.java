@@ -127,6 +127,7 @@ public class RemoteAPIProxy {
         return mapper.getTypeFactory().constructParametricType(collectionClass, elementClasses);   
     }
 	
+	@SuppressWarnings("deprecation")
 	public String sendPostRequest(String url, Map<String, String> params) 
 	{
 		List<NameValuePair> requestParams = initParams(params);

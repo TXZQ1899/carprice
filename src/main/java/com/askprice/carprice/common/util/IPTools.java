@@ -51,6 +51,7 @@ public class IPTools {
 		return ip;
 	}
 
+	@SuppressWarnings("deprecation")
 	public static Map<String, String> getCity(String ipAddr) {
 		List<NameValuePair> requestParams = new ArrayList<NameValuePair>();
 		requestParams.add(new BasicNameValuePair("q", ipAddr));

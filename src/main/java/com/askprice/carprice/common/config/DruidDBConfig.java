@@ -16,8 +16,6 @@ import com.alibaba.druid.pool.DruidDataSource;
 @Configuration
 public class DruidDBConfig {
 	
-	private Logger logger = LoggerFactory.getLogger(DruidDBConfig.class);
-
     @Value("${spring.datasource.url}")
     private String dbUrl;
 

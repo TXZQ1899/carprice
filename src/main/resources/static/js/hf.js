@@ -8,7 +8,8 @@
 				data:{serialid:serialId},
 				success:function(data){					
 					$("#jxs-ul li").remove();
-					
+					$("#title_in_page").text(data[0].brandName + " " + data[0].showName + " 咨询最底价");
+					document.title = data[0].brandName + " " + data[0].showName + " 咨询最底价";
 					var year = data[0].carYear;
 					$.each(data,function(index,item){
 						
@@ -27,6 +28,7 @@
 						$("#jxs-ul").append(option);
 						
 						if(item.carId == carId){
+							
 							getInfo(serialId, item.carId, item.carYear+" 款 "+item.carName);
 						}
 						
@@ -168,7 +170,6 @@
 			dataType:"json",
 			data:{carid:carId,cityid:cityCode},
 			success:function(data){
-				// alert(data);
 				
 				if(data == null){
 					$("#countNumber").text(0);
@@ -176,6 +177,7 @@
 					$("#jinxiaoshan").show();
 				}
 				
+				var length = 0;
 				$("#topDealers li").remove();
 				$.each(data,function(index,item){
 					
@@ -207,11 +209,21 @@
 		            }
 
 					$("#topDealers").append(li);
+					length++;
 				});
 				
-				$("#arrow").show();
-				$("#arrowup").hide();
-				$("#jinxiaoshan").hide();
+				if(length == 0){
+					$("#countNumber").text(0);
+					$("#arrow").hide();
+					$("#jinxiaoshan").show();
+				}
+				else
+				{
+					$("#arrow").show();
+					$("#arrowup").hide();
+					$("#jinxiaoshan").hide();
+				}
+				
 			}
 		});	
 	}
@@ -270,7 +282,6 @@
 			timeout:3500,
 			success:function(data){
 				res = data.trim();
-				res = "北京,201";
 				if(res==""){
 					if(y.text()==""){
 						y.text("深圳");
