@@ -17,5 +17,7 @@ public interface CarPriceService {
 	public List<CarInfoDto> getCarInfoBySerialId(Long serialId);
 	
 	public List<CarDealer> getCarDealerByCarId(String carId, String cityId);
+	
+	public String sendMessage(String phone);
 
 }

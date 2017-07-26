@@ -34,6 +34,14 @@ public class CarPriceController {
 		ResponseResult result = initResult(carList);
 		return result;
 	}
+	
+	@RequestMapping(value = { "/sms" }, method = RequestMethod.GET)
+	public @ResponseBody ResponseResult sendSms(
+			@RequestParam(value = "phone", required = true) String phone) throws Exception {
+		String reqId = carService.sendMessage(phone);
+		ResponseResult result = initResult(reqId);
+		return result;
+	}
 
 	private ResponseResult initResult(Object data) {
 		ResponseResult result = new ResponseResult();

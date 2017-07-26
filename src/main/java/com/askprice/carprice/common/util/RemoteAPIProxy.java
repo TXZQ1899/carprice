@@ -55,14 +55,6 @@ public class RemoteAPIProxy {
 		{
 			System.out.println("can not find city");
 		}
-		
-//		System.out.println(city.getCode());
-		
-//		List<CarDealer> list = getCarDealerBySerialId("2874","201");
-//		list.forEach(dealer -> System.out.println(dealer));
-		
-//		List<CarDealer> list2 = getCarDealerByCarId("117839","201");
-//		list2.forEach(dealer -> System.out.println(dealer));
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -162,6 +154,7 @@ public class RemoteAPIProxy {
         return body;  
     } 
 	
+	@SuppressWarnings("deprecation")
 	public String sendGetRequest(String url, Map<String, String> params) 
 	{
 		List<NameValuePair> requestParams = initParams(params);

@@ -1,6 +1,8 @@
 package com.askprice.carprice.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
@@ -11,6 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
+import com.askprice.carprice.common.cache.SmsCode;
+import com.askprice.carprice.common.cache.SmsSession;
+import com.askprice.carprice.common.message.client.sms.TemplateSMSSender;
 import com.askprice.carprice.common.util.IPTools;
 import com.askprice.carprice.common.util.RemoteAPIProxy;
 import com.askprice.carprice.dao.CarDao;
@@ -28,6 +33,12 @@ public class CarPriceServiceImpl implements CarPriceService {
 	
 	@Autowired
 	private CarPriceDao carPriceDao;
+	
+	@Autowired
+	private SmsSession smsSession;
+	
+	@Autowired
+	private TemplateSMSSender sender;
 	
 	@Autowired
 	private CarDao carDao;
@@ -56,6 +67,23 @@ public class CarPriceServiceImpl implements CarPriceService {
 	@Override
 	public List<CarDealer> getCarDealerByCarId(String carId, String cityId) {
 		return RemoteAPIProxy.getCarDealerByCarId(carId, cityId);
+	}
+
+	@Override
+	public String sendMessage(String phone) {
+		SmsCode smscode = new SmsCode(phone, 2);
+		String reqId = UUID.randomUUID().toString().replaceAll("-", "");
+		smsSession.put(reqId, smscode);
+		HashMap<String, Object> result = null;
+		String[] message = new String[]{smscode.getCode(), smscode.getExpiredMinutes().toString()};
+		result = sender.getSmsSender().sendTemplateSMS(phone, "159273" ,message);
+		if("000000".equals(result.get("statusCode"))){
+			logger.info("短信发送成功, 接收者：" + phone + ", 内容：" + message);
+			return reqId;
+		}else{
+			logger.info("短信发送失败, 接收者：" + phone + ", 内容：" + message);
+			return "-1";
+		}
 	}
 
 }
