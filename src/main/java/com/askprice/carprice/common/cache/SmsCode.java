@@ -77,4 +77,12 @@ public class SmsCode
 		this.expiredMinutes = expiredMinutes;
 	}
 	
+	public boolean isExpired() 
+	{
+		Long expTime = this.sendTime + this.expiredMinutes * 60 * 1000;
+		Long curTime = System.currentTimeMillis();
+		
+		return (curTime >= expTime);
+	}
+	
 }

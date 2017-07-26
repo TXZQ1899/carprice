@@ -9,6 +9,7 @@
 				success:function(data){					
 					$("#jxs-ul li").remove();
 					$("#title_in_page").text(data[0].brandName + " " + data[0].showName + " 咨询最底价");
+					$("#brand").val(data[0].brandName);
 					document.title = data[0].brandName + " " + data[0].showName + " 咨询最底价";
 					var year = data[0].carYear;
 					$.each(data,function(index,item){
@@ -102,16 +103,22 @@
 		}
 		
 		var carId = $("#carId").val();
-		var cityName = $("#choicecity").text();
+		var province = $("#pr-name").text();
+		var city = $("#choicecity").text();
 		var cityCode = $("#choicecitycode").text();
 		var appsku = $("#appsku").val();
 		var channel = $("#channel").val();
 		var zt = $("#zt").val();
 		var key = $("#key").val();
+		var reqId = $("#reqId").text();
 		var code = $("#code").val();
 		var pageType = $("#pageType").val();
+		var serialId = $("#serialId").val();
+		var name = $("input[name=name]").val();
+		var phone = $("input[name=phone]").val();
+		var code = $("input[name=code]").val();
+		var brand = $("#brand").val();
 		
-		var serialId = $("#serialId").val();// 获取车款id，发送给后台日志
 
 		// 判断是否提交日志的参数          
         /*if($("#rz").val()=="y"){
@@ -131,20 +138,20 @@
 					console.info("验证码验证成功："+data.message);*/
         
 					$.ajax({
-					  	url:"h5Controller/saveOrderInfoTest",
+					  	url:"api/car/saverequest",
 					  	type:"POST",
 						dataType:"json",
-						data:{carId:carId,cityName:cityName,ids:ids,name:name,phone:phone,appsku:appsku,channel:channel,zt:zt,key:key,pageType:pageType},
+						data:{name:name,code:code,brand:brand,carId:carId,province:province,city:city,reqId:reqId,serialId:serialId,dealers:ids,phone:phone,appsku:appsku,channel:channel,zt:zt,pageType:pageType},
 						success:function(data){
-							
+							showTip(data)
 						}
 					});
 					
 					// 跳转到成功页
-					$("#gs_name").val(name);
-					$("#gs_phone").val(phone);
-					$('#homeCitys').attr("action","h5AlertController/successPageSMS");
-					$('#submit').click();		
+//					$("#gs_name").val(name);
+//					$("#gs_phone").val(phone);
+//					$('#homeCitys').attr("action","h5AlertController/successPageSMS");
+//					$('#submit').click();		
 					//////////////////
 				/*}else{
 					showTip(data.message);
@@ -200,11 +207,11 @@
 			        address = "<p>地址："+item.address+"</p>";
 			        
 			        if(index < 3){
-			        	leftbox = "<div class='leftbox' id='boxDiv"+index+"' alt='"+item.id+"' onclick='choose("+index+")'><i id='checkbox' class='checkbox checked'></i></div>";
+			        	leftbox = "<div class='leftbox' id='boxDiv"+index+"' alt='"+item.dealerId+"' onclick='choose("+index+")'><i id='checkbox' class='checkbox checked'></i></div>";
 			        	$("#countNumber").text(index+1);
 				        li="<li>"+leftbox + h6+ address +"</li>";
 		            }else{
-		            	leftbox = "<div class='leftbox' id='boxDiv"+index+"' alt='"+item.id+"' onclick='choose("+index+")'><i id='checkbox' class='checkbox'></i></div>";
+		            	leftbox = "<div class='leftbox' id='boxDiv"+index+"' alt='"+item.dealerId+"' onclick='choose("+index+")'><i id='checkbox' class='checkbox'></i></div>";
 		            	li="<li style='display:none' class='hiddenLi'>"+leftbox + h6+ address +"</li>";
 		            }
 

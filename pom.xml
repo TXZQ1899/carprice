@@ -53,6 +53,13 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+		
+		<dependency>
+			<groupId>ytx.org.apache.http</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>1.0</version>
+			<classifier>yxt</classifier>
+		</dependency>
 
 		<dependency>
 			<groupId>com.alibaba</groupId>
@@ -71,6 +78,20 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+	
+	<repositories>
+		<repository>
+			<id>nexus</id>
+			<name>Nexus Repository</name>
+			<url>http://nexus.campuslabs.cn/nexus/content/groups/public/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
 
 	<build>
 		<plugins>

@@ -1,11 +1,14 @@
 package com.askprice.carprice.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.askprice.carprice.common.util.City;
+import com.askprice.carprice.dto.AskPriceRequest;
 import com.askprice.carprice.dto.CarInfoDto;
 import com.askprice.carprice.dto.ResponseResult;
 import com.askprice.carprice.entity.CarDealer;
@@ -36,11 +40,22 @@ public class CarPriceController {
 	}
 	
 	@RequestMapping(value = { "/sms" }, method = RequestMethod.GET)
-	public @ResponseBody ResponseResult sendSms(
+	public @ResponseBody Map<String,String> sendSms(
 			@RequestParam(value = "phone", required = true) String phone) throws Exception {
 		String reqId = carService.sendMessage(phone);
-		ResponseResult result = initResult(reqId);
-		return result;
+		Map<String, String> returnValue = new HashMap<>();
+		if (reqId.equals("-1")) 
+		{
+			returnValue.put("code", "-1");
+			returnValue.put("message", "短信发送失败,请重新获取!");
+		}
+		else 
+		{
+			returnValue.put("code", "0");
+			returnValue.put("message", "短信发送成功");
+			returnValue.put("reqId", reqId);
+		}
+		return returnValue;
 	}
 
 	private ResponseResult initResult(Object data) {
@@ -80,5 +95,57 @@ public class CarPriceController {
 		List<CarDealer> carList = carService.getCarDealerByCarId(carId, cityId);
 		return carList;
 	}
+	
+	@RequestMapping(value = { "/saverequest" }, method = RequestMethod.POST)
+	public @ResponseBody String saveRequest(
+			@RequestParam(value = "name", required = true) String name,
+			@RequestParam(value = "phone", required = true) String phone,
+			@RequestParam(value = "reqId", required = true) String reqId,
+			@RequestParam(value = "code", required = true) String code,
+			@RequestParam(value = "province", required = true) String province,
+			@RequestParam(value = "city", required = true) String city,
+			@RequestParam(value = "brand", required = true) String brand,
+			@RequestParam(value = "serialId", required = true) Long serialId,
+			@RequestParam(value = "carId", required = true) Long carId,
+			@RequestParam(value = "dealers", required = true) String dealers,
+			@RequestParam(value = "appsku", required = true) String appsku,
+			@RequestParam(value = "zt", required = true) String zt,
+			@RequestParam(value = "pageType", required = true) String pagetype,
+			@RequestParam(value = "channel", required = true) String channel) throws Exception {
+		
+		AskPriceRequest request = new AskPriceRequest();
+		request.setAppsku(appsku);
+		request.setBrand(brand);
+		request.setCarId(carId);
+		request.setChannel(channel);
+		request.setCity(city);
+		String[] strArray = dealers.split(",");
+		Long[] delearIds = new Long[strArray.length];
+		int index = 0;
+		for(String str : strArray) 
+		{
+			delearIds[index] = Long.parseLong(str);
+			index++;
+		}
+		request.setDealers(delearIds);
+		request.setName(name);
+		request.setPagetype(pagetype);
+		request.setPhone(phone);
+		request.setProvince(province);
+		request.setReqId(reqId);
+		request.setSerialId(serialId);
+		request.setSmscode(code);
+		request.setZt(zt);
+		
+		carService.saveRequest(request);
+		
+		return "您的询价请求已经成功提交!";
+	}
+	
+//	@RequestMapping(value = { "/saverequest" }, method = RequestMethod.POST)
+//	public @ResponseBody String saveRequest(@RequestBody AskPriceRequest request) throws Exception {
+//		carService.saveRequest(request);
+//		return "您的询价请求已经成功提交!";
+//	}
 
 }

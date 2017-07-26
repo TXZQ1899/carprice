@@ -66,8 +66,14 @@
 						<label>手<em class="w6"></em>机<em class="w6"></em>号：</label>
 						<input id="inPhone" name="phone" type="tel" class="current" placeholder="请输入您的手机号" maxlength="11" />
 					</li>
+					
+					<li>
+		                <label>验<em class="w6"></em>证<em class="w6"></em>码：</label>
+		                <input id="code" name="code" type="text" class="current" placeholder="请输入验证码" maxlength="11" style="width:30%" />
+		                <button id="btn" style="width:100px;height:35px;margin-left:120px;line-height:4px;margin-top:10px" >获取验证码</button>
+		               	<div hidden="true" id="reqId"></div>
+           		 	</li>
 					<li data-action="province" id="provin">
-
 						<a href="javascript:void(0);" class="fl"><label>城<em class="w28"></em>市：</label>
                         <em class="frist-select"></em></a>
 						<a href="javascript:void(0);" class="province cityname fl gry" id="choicecity" ></a>
@@ -92,10 +98,7 @@
         	<!--展开全部-->
             <a href="javascript:;" id="arrow" data-token="close">展开全部<span class="arrow_down"></span></a>
             <a href="javascript:;" id="arrowup" data-token="close" style='display:none'>收起全部<span class="arrow_down up"></span></a>
-            
-            
             <a href="javascript:;" id="jinxiaoshan" data-token="close" style='display:none'><span class="jinxiaoshan_down">本地没有经销商</span></a>
-            
         </div>
         <div class="message-failure" id="loadfail" style="display:none;">
             <img src="imags/failure.png" />
@@ -124,6 +127,7 @@
 <input type="hidden" id="zt" name="zt" value="AT0173" />
 <input type="hidden" id="key" name="key" value="" />
 <input type="hidden" id="carId" name="carId" value="" />
+<input type="hidden" id="brand" name="brand" value="" />
 
 <input type="hidden" id="gs_name" name="gs_name" value="" />
 <input type="hidden" id="gs_phone" name="gs_phone" value="" />

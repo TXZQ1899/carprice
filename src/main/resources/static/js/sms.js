@@ -36,17 +36,17 @@ $(function() {
             }
         }
         $.ajax({
-            url: "h5Controller/send.do",
-            type: "POST",
+            url: "api/car/sms",
+            type: "GET",
             dataType: "json",
             data: {
                 phone: phone
             }
         }).done(function(re) {
-            $.cookie("total", 60);
-            timekeeping();
-            if (re.code == "1") {
+            
+            if (re.code == "0") {
                 showTip(re.message)
+                $("#reqId").text(re.reqId);                
             } else {
                 showTip(re.message)
             }
