@@ -24,6 +24,9 @@ public class CarCityDealer implements Serializable {
 	@Column(name = "cityId")
 	private String cityId;
 	
+	@Column(name = "carId")
+	private Long carId;
+	
 	@Column(name = "serialId")
 	private Long serialId;
 	
@@ -71,6 +74,22 @@ public class CarCityDealer implements Serializable {
 
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
+	}
+
+	public Long getCarId() {
+		return carId;
+	}
+
+	public void setCarId(Long carId) {
+		this.carId = carId;
+	}
+	
+	public void initCityDealer(String cityId, Long carId, Long dealerId) 
+	{
+		this.cityId = cityId;
+		this.carId = carId;
+		this.dealerId = dealerId;
+		this.updateTime = new Date();
 	}
 
 }

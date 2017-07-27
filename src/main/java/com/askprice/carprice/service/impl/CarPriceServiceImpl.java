@@ -18,11 +18,14 @@ import com.askprice.carprice.common.cache.SmsSession;
 import com.askprice.carprice.common.message.client.sms.TemplateSMSSender;
 import com.askprice.carprice.common.util.IPTools;
 import com.askprice.carprice.common.util.RemoteAPIProxy;
+import com.askprice.carprice.dao.CarCityDealerDao;
 import com.askprice.carprice.dao.CarDao;
+import com.askprice.carprice.dao.CarDealerDao;
 import com.askprice.carprice.dao.CarPriceDao;
 import com.askprice.carprice.dto.AskPriceRequest;
 import com.askprice.carprice.dto.CarInfoDto;
 import com.askprice.carprice.entity.AskRequest;
+import com.askprice.carprice.entity.CarCityDealer;
 import com.askprice.carprice.entity.CarDealer;
 import com.askprice.carprice.entity.CarInfo;
 import com.askprice.carprice.service.CarPriceService;
@@ -35,6 +38,12 @@ public class CarPriceServiceImpl implements CarPriceService {
 	
 	@Autowired
 	private CarPriceDao carPriceDao;
+	
+	@Autowired
+	private CarDealerDao carDealerDao;
+	
+	@Autowired
+	private CarCityDealerDao carCityDealerDao;
 	
 	@Autowired
 	private SmsSession smsSession;
@@ -69,7 +78,31 @@ public class CarPriceServiceImpl implements CarPriceService {
 	@Override
 	public List<CarDealer> getCarDealerByCarId(String carId, String cityId) {
 		
-		return RemoteAPIProxy.getCarDealerByCarId(carId, cityId);
+		if (carId == null || carId.equals("")) return null;
+		if (cityId == null || cityId.equals("")) return null;
+		
+		List<CarDealer> dealerList = carDao.getDealerByCarId_CityId(cityId, Long.parseLong(carId));
+		if (dealerList == null || dealerList.size()==0) 
+		{
+			dealerList = RemoteAPIProxy.getCarDealerByCarId(carId, cityId);
+			
+			List<CarCityDealer> oldDealers = carCityDealerDao.getDealerByCityIdAndCarId(cityId, Long.parseLong(carId));
+			oldDealers.forEach(dealer -> 
+			{
+				carDealerDao.delete(dealer.getDealerId());
+				carCityDealerDao.delete(dealer);
+			});
+			
+			dealerList.forEach(dealer -> 
+			{
+				CarDealer newDealer = carDealerDao.save(dealer);
+				CarCityDealer cityDealer = new CarCityDealer();
+				cityDealer.initCityDealer(cityId, Long.parseLong(carId), newDealer.getId());
+				carCityDealerDao.save(cityDealer);
+			});
+		}
+		
+		return dealerList;
 	}
 
 	@Override

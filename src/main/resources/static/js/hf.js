@@ -154,10 +154,11 @@
 			data:{carid:carId,cityid:cityCode},
 			success:function(data){
 				
-				if(data == null){
+				if(data == null || data == ""){
 					$("#countNumber").text(0);
 					$("#arrow").hide();
 					$("#jinxiaoshan").show();
+					return;
 				}
 				
 				var length = 0;

@@ -8,9 +8,9 @@ import com.askprice.carprice.entity.AskRequest;
 import com.askprice.carprice.entity.CarInfo;
 
 public interface CarPriceDao extends CrudRepository<CarInfo, Long> {
-	
-	 List<CarInfo> findByCarSerialId(Long serialId);
+
+	List<CarInfo> findByCarSerialId(Long serialId);
 
 	void save(AskRequest req);
-	 
+
 }
