@@ -78,14 +78,16 @@ public class CarPriceServiceImpl implements CarPriceService {
 		SmsCode smscode = new SmsCode(phone, 2);
 		String reqId = UUID.randomUUID().toString().replaceAll("-", "");
 		smsSession.put(reqId, smscode);
-		HashMap<String, Object> result = null;
-		String[] message = new String[]{smscode.getCode(), smscode.getExpiredMinutes().toString()};
-		result = sender.getSmsSender().sendTemplateSMS(phone, "159273" ,message);
-		if("000000".equals(result.get("statusCode"))){
-			return reqId;
-		}else{
-			return "-1";
-		}
+		
+		return reqId;
+//		HashMap<String, Object> result = null;
+//		String[] message = new String[]{smscode.getCode(), smscode.getExpiredMinutes().toString()};
+//		result = sender.getSmsSender().sendTemplateSMS(phone, "159273" ,message);
+//		if("000000".equals(result.get("statusCode"))){
+//			return reqId;
+//		}else{
+//			return "-1";
+//		}
 	}
 
 	@Override

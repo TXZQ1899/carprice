@@ -74,7 +74,7 @@ public class CarPriceController {
 		if (cityName != null && cityName.trim().length() > 0) {
 			try {
 				city = City.valueOf(cityName);
-				returnValue = cityName + "," + city.getCode();
+				returnValue = city.getProvince()+ "," + cityName + "," + city.getCode();
 			} catch (Exception e) {
 			}
 		}
@@ -97,7 +97,7 @@ public class CarPriceController {
 	}
 	
 	@RequestMapping(value = { "/saverequest" }, method = RequestMethod.POST)
-	public @ResponseBody String saveRequest(
+	public @ResponseBody ResponseResult saveRequest(
 			@RequestParam(value = "name", required = true) String name,
 			@RequestParam(value = "phone", required = true) String phone,
 			@RequestParam(value = "reqId", required = true) String reqId,
@@ -139,7 +139,7 @@ public class CarPriceController {
 		
 		carService.saveRequest(request);
 		
-		return "您的询价请求已经成功提交!";
+		return initResult("您的询价请求已经成功提交!");
 	}
 	
 //	@RequestMapping(value = { "/saverequest" }, method = RequestMethod.POST)

@@ -110,6 +110,42 @@ public class AskRequest implements Serializable  {
 		this.brand = brand;
 	}
 
+	
+
+	public String getAppsku() {
+		return appsku;
+	}
+
+	public void setAppsku(String appsku) {
+		this.appsku = appsku;
+	}
+
+	public String getChannel() {
+		return channel;
+	}
+
+	public void setChannel(String channel) {
+		this.channel = channel;
+	}
+
+	
+
+	public String getZt() {
+		return zt;
+	}
+
+	public void setZt(String zt) {
+		this.zt = zt;
+	}
+
+	public String getPagetype() {
+		return pagetype;
+	}
+	
+	public void setPagetype(String pagetype) {
+		this.pagetype = pagetype;
+	}
+
 	public Long getSerialId() {
 		return serialId;
 	}
@@ -134,22 +170,6 @@ public class AskRequest implements Serializable  {
 		this.dealerId = dealerId;
 	}
 
-	public String getAppsku() {
-		return appsku;
-	}
-
-	public void setAppsku(String appsku) {
-		this.appsku = appsku;
-	}
-
-	public String getChannel() {
-		return channel;
-	}
-
-	public void setChannel(String channel) {
-		this.channel = channel;
-	}
-
 	public Date getRequestTime() {
 		return requestTime;
 	}
@@ -157,21 +177,6 @@ public class AskRequest implements Serializable  {
 	public void setRequestTime(Date requestTime) {
 		this.requestTime = requestTime;
 	}
-
-	public String getZt() {
-		return zt;
-	}
-
-	public void setZt(String zt) {
-		this.zt = zt;
-	}
-
-	public String getPagetype() {
-		return pagetype;
-	}
-
-	public void setPagetype(String pagetype) {
-		this.pagetype = pagetype;
-	}
+	
 	
 }

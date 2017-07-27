@@ -69,11 +69,12 @@
             }
 
             _ul.html(_lis);
-            $("#pr-name").text(proviceName);
+            
             $("#cityinfo").show();
             $("#cityinfo1").show();
             $('#cityinfo1,#province1').removeClass('Sideslip_hd02').addClass('Sideslip_hd');
             $('#cityinfo1').find('li').click(function() {
+            	$("#selectprovince").text(proviceName);
                 $('.cityname').text($(this).text());
                 $("#choicecitycode").text($(this).attr('data-code'));
                 $('#cityinfo,#province').hide();

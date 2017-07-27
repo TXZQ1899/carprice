@@ -102,15 +102,21 @@
 			return;
 		}
 		
+		var reqId = $("#reqId").text();
+		if(reqId==""){
+			showTip("请进行手机短信验证");
+			return;
+		}
+		
 		var carId = $("#carId").val();
-		var province = $("#pr-name").text();
+		var province = $("#selectprovince").text();
 		var city = $("#choicecity").text();
 		var cityCode = $("#choicecitycode").text();
 		var appsku = $("#appsku").val();
 		var channel = $("#channel").val();
 		var zt = $("#zt").val();
 		var key = $("#key").val();
-		var reqId = $("#reqId").text();
+		
 		var code = $("#code").val();
 		var pageType = $("#pageType").val();
 		var serialId = $("#serialId").val();
@@ -118,54 +124,24 @@
 		var phone = $("input[name=phone]").val();
 		var code = $("input[name=code]").val();
 		var brand = $("#brand").val();
-		
-
-		// 判断是否提交日志的参数          
-        /*if($("#rz").val()=="y"){
-			// 保存车型id
-	        saveModels(serialId,carId,"1");// 这里点击了提交按钮，subBut为1
-        }*/
-        
-        /*$.ajax({
-		  	url:"h5Controller/ckCode.do",
+		$("#reqId").text("");
+		$.ajax({
+		  	url:"api/car/saverequest",
 		  	type:"POST",
 			dataType:"json",
-			async:false,
-			data:{phone:phone,code:code},
+			data:{name:name,code:code,brand:brand,carId:carId,province:province,city:city,reqId:reqId,serialId:serialId,dealers:ids,phone:phone,appsku:appsku,channel:channel,zt:zt,pageType:pageType},
 			success:function(data){
-
-				if(data.code=="1"){
-					console.info("验证码验证成功："+data.message);*/
-        
-					$.ajax({
-					  	url:"api/car/saverequest",
-					  	type:"POST",
-						dataType:"json",
-						data:{name:name,code:code,brand:brand,carId:carId,province:province,city:city,reqId:reqId,serialId:serialId,dealers:ids,phone:phone,appsku:appsku,channel:channel,zt:zt,pageType:pageType},
-						success:function(data){
-							showTip(data)
-						}
-					});
+				if (data == "")
+				{
 					
-					// 跳转到成功页
-//					$("#gs_name").val(name);
-//					$("#gs_phone").val(phone);
-//					$('#homeCitys').attr("action","h5AlertController/successPageSMS");
-//					$('#submit').click();		
-					//////////////////
-				/*}else{
-					showTip(data.message);
-					$("#submitOrder").attr('disabled',false);
-					return;
+				}
+				else
+				{
+					
 				}
 			}
-		})*/
+		});
 		
-		// 跳转到成功页
-		
-		
-		/*$('#homeCitys').attr("action","GenSui/index");
-		$('#submit').click();	*/	
 	});
       
     // 根据车型id和城市获取经销商
@@ -276,6 +252,7 @@
 	
 	// 定位
 	var y=$("#choicecity");
+	var p=$("#selectprovince");
 	var _x=$("#choicecitycode");
 	function getLocation(){
 		getCityByIp();
@@ -293,13 +270,15 @@
 					if(y.text()==""){
 						y.text("深圳");
 						_x.text("502");
+						p.text("广东");
 						showGrouponPrice_location($("#carId").val(),_x.text());
 					}
 				}else{
 					//ip定位成功
 					if(y.text()==""){
-						y.text(res.split(",")[0]);
-						_x.text(res.split(",")[1]);
+						p.text(res.split(",")[0]);
+						y.text(res.split(",")[1]);
+						_x.text(res.split(",")[2]);
 						showGrouponPrice_location($("#carId").val(),_x.text());
 					}
 				}
@@ -307,6 +286,7 @@
 			error:function(err){
 				//alert("超时");
 				if(y.text()==""){
+					p.text("广东");
 					y.text("深圳");
 					_x.text("502");
 					showGrouponPrice_location($("#carId").val(),_x.text());
@@ -314,24 +294,6 @@
 			}
 		});	
   	}
-  	
-//	function showPosition(position){
-//		var lat = position.coords.latitude;
-//		var lng = position.coords.longitude;
-//		// gps定位
-//		$.post('/getCityByGpsOrIp.do', {lat:lat,lng:lng}, function(res){
-//			res = res.trim();
-//			// gps定位失败
-//			if(res==""){
-//				y.text("上海");
-//				showGrouponPrice_location($("#carId").val(),y.text());
-//			}else{
-//				// 定位成功
-//				y.text(res);
-//				showGrouponPrice_location($("#carId").val(),res);
-//			}
-//        });
-//  	}
 
 	//城市
       $(document).ready(function(){
