@@ -1,7 +1,6 @@
 package com.askprice.carprice.service.impl;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -78,8 +77,10 @@ public class CarPriceServiceImpl implements CarPriceService {
 		SmsCode smscode = new SmsCode(phone, 2);
 		String reqId = UUID.randomUUID().toString().replaceAll("-", "");
 		smsSession.put(reqId, smscode);
-		
+		System.out.println(smscode.getCode());
 		return reqId;
+		
+		
 //		HashMap<String, Object> result = null;
 //		String[] message = new String[]{smscode.getCode(), smscode.getExpiredMinutes().toString()};
 //		result = sender.getSmsSender().sendTemplateSMS(phone, "159273" ,message);
@@ -92,6 +93,12 @@ public class CarPriceServiceImpl implements CarPriceService {
 
 	@Override
 	public String saveRequest(AskPriceRequest request) {
+		
+		String reqId = request.getReqId();
+//		String errorMessage = VerifySmsCode(reqId, request.getSmscode());
+		String errorMessage = "";
+		
+		if (!errorMessage.equals("")) return errorMessage;
 		
 		Long[] dealers = request.getDealers();
 		for(Long dealer : dealers) 
@@ -107,17 +114,41 @@ public class CarPriceServiceImpl implements CarPriceService {
 			req.setPagetype(request.getPagetype());
 			req.setPhone(request.getPhone());
 			req.setProvince(request.getProvince());
-//			req.setReqId(request.getReqId());
 			req.setSerialId(request.getSerialId());
-//			req.setSmscode(code);
 			req.setZt(request.getZt());
 			req.setRequestTime(new Date());
 			carPriceDao.save(req);		
 		}
 		
-		
-		
 		return "";
+	}
+	
+	private String VerifySmsCode(String reqId, String actualCode) 
+	{
+		if (reqId == null || reqId.equals("")) 
+		{
+			return "短信验证码验证不通过,请重新验证.";
+		}
+		
+		SmsCode code = smsSession.getCode(reqId);
+		if (code == null) 
+		{
+			return "短信验证码验证不通过,请重新验证.";
+		}
+		
+		if (code.isExpired()) 
+		{
+			return "验证码已过期,请重新验证";
+		}
+		
+		if (code.getCode().equals(actualCode)) 
+		{
+			return "";
+		}
+		else 
+		{
+			return "短信验证码验证不通过,请重新验证.";
+		}
 	}
 
 }

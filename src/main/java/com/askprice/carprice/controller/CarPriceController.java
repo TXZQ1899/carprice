@@ -65,6 +65,13 @@ public class CarPriceController {
 		result.setData(data);
 		return result;
 	}
+	
+	private ResponseResult initResult(String message) {
+		ResponseResult result = new ResponseResult();
+		result.setCode("0");
+		result.setMessage(message);
+		return result;
+	}
 
 	@RequestMapping(value = { "/locatecity" }, method = RequestMethod.GET)
 	public @ResponseBody String currentCity(HttpServletRequest request) throws Exception {
@@ -137,7 +144,8 @@ public class CarPriceController {
 		request.setSmscode(code);
 		request.setZt(zt);
 		
-		carService.saveRequest(request);
+		String errorMessage = carService.saveRequest(request);
+		if (!errorMessage.equals("")) return initResult(errorMessage);
 		
 		return initResult("您的询价请求已经成功提交!");
 	}

@@ -137,7 +137,7 @@
 				}
 				else
 				{
-					
+					showTip(data.message);
 				}
 			}
 		});
