@@ -27,8 +27,6 @@ public class AskRequest implements Serializable  {
 	@Column(name = "phone")
 	private String phone;
 	
-	
-	
 	@Column(name = "province")
 	private String province;
 	
