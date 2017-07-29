@@ -27,7 +27,6 @@ public class IPTools {
 	public static Logger logger = LoggerFactory.getLogger(IPTools.class);
 
 	public static void main(String[] args) {
-		IPTools.getCity("202.65.196.242");
 
 	}
 

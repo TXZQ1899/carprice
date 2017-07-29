@@ -8,57 +8,69 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "ask_price_request")
-public class AskRequest implements Serializable  {
-	
+public class AskRequest implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Long Id;
-	
+
 	@Column(name = "name")
 	private String name;
-	
+
 	@Column(name = "phone")
 	private String phone;
-	
-	
-	
+
 	@Column(name = "province")
 	private String province;
-	
+
 	@Column(name = "city")
 	private String city;
-	
+
 	@Column(name = "brand")
 	private String brand;
-	
-	@Column(name = "serialId")
+
+	@Column(name = "serialId", insertable = false, updatable = false)
 	private Long serialId;
 	
-	@Column(name = "carId")
+	@OneToOne
+	@JoinColumn(name = "cs_id")
+	private CarSerial serial;
+
+	@Column(name = "carId", insertable = false, updatable = false)
 	private Long carId;
 	
-	@Column(name = "dealerId")
+	@OneToOne
+	@JoinColumn(name = "car_id")
+	private CarInfo car;
+
+	@Column(name = "dealerId", insertable = false, updatable = false)
 	private Long dealerId;
 	
+	@OneToOne
+	@JoinColumn(name = "dealerId")
+	private CarDealer dealer;
+
 	@Column(name = "appsku")
 	private String appsku;
-	
+
 	@Column(name = "channel")
 	private String channel;
-	
+
 	@Column(name = "requestTime")
 	private Date requestTime;
-	
+
 	@Column(name = "zt")
 	private String zt;
-	
+
 	@Column(name = "pagetype")
 	private String pagetype;
 
@@ -110,8 +122,6 @@ public class AskRequest implements Serializable  {
 		this.brand = brand;
 	}
 
-	
-
 	public String getAppsku() {
 		return appsku;
 	}
@@ -128,8 +138,6 @@ public class AskRequest implements Serializable  {
 		this.channel = channel;
 	}
 
-	
-
 	public String getZt() {
 		return zt;
 	}
@@ -141,7 +149,7 @@ public class AskRequest implements Serializable  {
 	public String getPagetype() {
 		return pagetype;
 	}
-	
+
 	public void setPagetype(String pagetype) {
 		this.pagetype = pagetype;
 	}
@@ -169,14 +177,38 @@ public class AskRequest implements Serializable  {
 	public void setDealerId(Long dealerId) {
 		this.dealerId = dealerId;
 	}
+	
 
 	public Date getRequestTime() {
 		return requestTime;
 	}
 
+	public CarSerial getSerial() {
+		return serial;
+	}
+
+	public CarInfo getCar() {
+		return car;
+	}
+
+	public CarDealer getDealer() {
+		return dealer;
+	}
+
+	public void setSerial(CarSerial serial) {
+		this.serial = serial;
+	}
+
+	public void setCar(CarInfo car) {
+		this.car = car;
+	}
+
+	public void setDealer(CarDealer dealer) {
+		this.dealer = dealer;
+	}
+
 	public void setRequestTime(Date requestTime) {
 		this.requestTime = requestTime;
 	}
-	
-	
+
 }

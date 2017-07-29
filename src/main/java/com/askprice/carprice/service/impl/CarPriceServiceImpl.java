@@ -22,8 +22,12 @@ import com.askprice.carprice.dao.CarCityDealerDao;
 import com.askprice.carprice.dao.CarDao;
 import com.askprice.carprice.dao.CarDealerDao;
 import com.askprice.carprice.dao.CarPriceDao;
+import com.askprice.carprice.dao.ListPage;
+import com.askprice.carprice.dao.PaginationData;
+import com.askprice.carprice.dto.AskPriceRecord;
 import com.askprice.carprice.dto.AskPriceRequest;
 import com.askprice.carprice.dto.CarInfoDto;
+import com.askprice.carprice.dto.SearchRequest;
 import com.askprice.carprice.entity.AskRequest;
 import com.askprice.carprice.entity.CarCityDealer;
 import com.askprice.carprice.entity.CarDealer;
@@ -182,6 +186,11 @@ public class CarPriceServiceImpl implements CarPriceService {
 		{
 			return "短信验证码验证不通过,请重新验证.";
 		}
+	}
+
+	@Override
+	public PaginationData<AskPriceRecord> getAskPriceRecord(SearchRequest request) {
+		return carDao.getAskpriceRequest(request);
 	}
 
 }

@@ -14,6 +14,7 @@ import javax.persistence.Query;
 import javax.transaction.Transactional;
 
 import org.apache.commons.beanutils.ConvertUtils;
+import org.hibernate.HibernateException;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.transform.Transformers;
@@ -41,6 +42,7 @@ public class CommonDao {
 	@SuppressWarnings("unchecked")
 	public List<?> queryListEntity(String sql, Map<String, Object> params, Class<?> clazz) {
 		Session session = entityManager.unwrap(org.hibernate.Session.class);
+		
 		SQLQuery query = session.createSQLQuery(sql);
 		if (params != null) {
 			for (String key : params.keySet()) {
@@ -55,6 +57,65 @@ public class CommonDao {
 		}
 		return result;
 	}
+	
+	public <K> ListPage<K> listBySqlDto(ListPage<K> page, String countSql,
+			String sql, Class<K> dtoClass) throws HibernateException {
+		Session session = entityManager.unwrap(org.hibernate.Session.class);
+		setPageSizeBySql(page, countSql,session);
+		if(page.getTotalPage()>0){
+			sql = addOrderBy(page, sql);
+			setPageBySqlDto(page, sql, session,dtoClass);
+		}
+		return page;
+	}
+	
+	@SuppressWarnings({ "unchecked"})
+	private <K> void setPageBySqlDto(final ListPage<K> page,final String sql, Session session, Class<K> dtoClass) throws HibernateException{
+		SQLQuery query = (SQLQuery) session.createSQLQuery(sql).setResultTransformer(Transformers.aliasToBean(dtoClass));  
+//		addQueryParams(query,param);
+		query.setMaxResults(page.getSize());
+		query.setFirstResult(page.getStart());
+		List<K> result = query.list();
+		page.getList().addAll(result);
+	}
+	
+//	protected SQLQuery addQueryParams(SQLQuery query, List<?> param){
+//		if (param != null && param.size()>0)
+//			for (int i = 0; i < param.size(); i++)
+//				query.setParameter(arg0, arg1)
+//				query.setParameter(i, param.get(i));
+//	    return query;
+//	}
+	
+	private <K> void setPageSizeBySql(final ListPage<K> page, String countSql, Session session) throws HibernateException{
+		SQLQuery query = session.createSQLQuery(countSql);
+//		addQueryParams(query,param);
+		page.setTotal(Integer.parseInt(String.valueOf(query.uniqueResult())));
+		this.initFirstPage(page);
+	}
+	
+	protected <K> void initFirstPage(ListPage<K> page){
+		if(page.getNumber()>1 && page.getTotalPage() < page.getNumber()){
+			page.setNumber(1);
+		}
+	}
+	
+	private <K> String addOrderBy(ListPage<K> page, String hsql)
+	  {
+	    StringBuffer orderby = new StringBuffer("");
+	    List<ListPage<K>.OrderBy> orderByList = page.getOrderByList();
+	    if ((orderByList != null) && (orderByList.size()>0)){
+	    	if(hsql != null	&& hsql.toUpperCase().indexOf("ORDER BY") < 0){
+		    	for(ListPage<K>.OrderBy each: orderByList){
+		    		if(each !=null){
+		    			orderby.append(("".equals(orderby.toString())) ? " ORDER BY " : " ,");
+		    			orderby.append(" "+each.getProperty() +  ((ListPage.OrderType.ASCENDING.equals(each.getType())) ? " ASC " : " DESC "));
+		    		}
+		    	}
+	    	}
+	    }
+	    return hsql + orderby.toString();
+	  }
 
 	private List<Object> convert(Class<?> clazz, List<Map<String, Object>> list) {
 		List<Object> result;
@@ -137,5 +198,17 @@ public class CommonDao {
 			}
 		}
 		return query.executeUpdate();
+	}
+	
+	public <K> PaginationData<K> buildPagination(Integer pageSize, Integer pageNo, ListPage<K> listpage)
+	{
+		PaginationData<K> data = new PaginationData<>();
+		data.setPage_no(pageNo);
+		data.setPage_size(pageSize);
+		data.setTotal_page(listpage.getTotalPage());
+		data.setRecord_count(listpage.getTotal());
+		data.setLastpage(pageNo.equals(listpage.getTotalPage()));
+		data.setList(listpage.getList());
+		return data;
 	}
 }
