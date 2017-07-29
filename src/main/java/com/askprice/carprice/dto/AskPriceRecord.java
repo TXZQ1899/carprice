@@ -1,10 +1,11 @@
 package com.askprice.carprice.dto;
 
+import java.math.BigInteger;
 import java.util.Date;
 
 public class AskPriceRecord {
 	
-	private Long id;
+	private BigInteger id;
 	
 	private String name;
 	
@@ -30,9 +31,9 @@ public class AskPriceRecord {
 	
 	private String pagetype;
 
-	private Date requestTime;
+	private String requestTime;
 
-	public Long getId() {
+	public BigInteger getId() {
 		return id;
 	}
 
@@ -84,11 +85,11 @@ public class AskPriceRecord {
 		return pagetype;
 	}
 
-	public Date getRequestTime() {
+	public String getRequestTime() {
 		return requestTime;
 	}
 
-	public void setId(Long id) {
+	public void setId(BigInteger id) {
 		this.id = id;
 	}
 
@@ -140,7 +141,7 @@ public class AskPriceRecord {
 		this.pagetype = pagetype;
 	}
 
-	public void setRequestTime(Date requestTime) {
+	public void setRequestTime(String requestTime) {
 		this.requestTime = requestTime;
 	}
 

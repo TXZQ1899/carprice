@@ -8,8 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -27,17 +25,13 @@ public class CarCityDealer implements Serializable {
 	private String cityId;
 	
 	@Column(name = "carId")
-	@OneToOne
-	@JoinColumn(name = "car_id")
-	private CarInfo carId;
+	private Long carId;
 	
 	@Column(name = "serialId")
 	private Long serialId;
 	
-//	@Column(name = "dealerId")
-	@OneToOne
-	@JoinColumn(name = "dealerId")
-	private CarDealer dealer;
+	@Column(name = "dealerId")
+	private Long dealerId;
 	
 	@Column(name = "updateTime")
 	private Date updateTime;

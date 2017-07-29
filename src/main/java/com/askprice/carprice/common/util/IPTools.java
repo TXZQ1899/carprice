@@ -27,7 +27,25 @@ public class IPTools {
 	public static Logger logger = LoggerFactory.getLogger(IPTools.class);
 
 	public static void main(String[] args) {
-		IPTools.getCity("202.65.196.242");
+		String sql = "SELECT \r\n" + 
+				"    r.id, \r\n" + 
+				"    r.name, \r\n" + 
+				"    r.phone, \r\n" + 
+				"    r.province, \r\n" + 
+				"    r.city, \r\n" + 
+				"    r.brand, \r\n" + 
+				"    d.dealerShortName as dealer, \r\n" + 
+				"    s.cs_show_name as serialName, \r\n" + 
+				"    concat(i.car_name, ' ', i.car_year) as carName, \r\n" + 
+				"    r.appsku, \r\n" + 
+				"    r.channel, \r\n" + 
+				"    r.requestTime, \r\n" + 
+				"    r.zt, \r\n" + 
+				"    r.pagetype \r\n" + 
+				"FROM \r\n" ;
+		
+		
+		System.out.println(sql.substring(sql.indexOf("FROM")));
 
 	}
 

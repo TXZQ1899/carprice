@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.askprice.carprice.common.util.City;
+import com.askprice.carprice.dao.ListPage;
+import com.askprice.carprice.dao.PaginationData;
+import com.askprice.carprice.dto.AskPriceRecord;
 import com.askprice.carprice.dto.AskPriceRequest;
 import com.askprice.carprice.dto.CarInfoDto;
 import com.askprice.carprice.dto.ResponseResult;
@@ -152,11 +155,12 @@ public class CarPriceController {
 	}
 	
 	@RequestMapping(value = { "/search" }, method = RequestMethod.POST)
-	public @ResponseBody String search(@RequestBody SearchRequest request) throws Exception {
+	public @ResponseBody PaginationData<AskPriceRecord> search(@RequestBody SearchRequest request) throws Exception {
 		
 		System.out.println(request.getBrand());
-		
-		return "您的询价请求已经成功提交!";
+		request.setPageSize(15);
+		request.setPageNo(0);
+		return carService.getAskPriceRecord(request);
 	}
 	
 //	@RequestMapping(value = { "/saverequest" }, method = RequestMethod.POST)

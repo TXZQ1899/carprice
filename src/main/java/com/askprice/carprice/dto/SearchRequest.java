@@ -20,6 +20,12 @@ public class SearchRequest {
 	private String end_time;
 	
 	private String page_type;
+	
+	private Integer pageSize;
+	
+	private Integer pageNo;
+	
+	
 
 	public String getBrand() {
 		return brand;
@@ -99,6 +105,22 @@ public class SearchRequest {
 
 	public void setPage_type(String page_type) {
 		this.page_type = page_type;
+	}
+
+	public Integer getPageSize() {
+		return pageSize;
+	}
+
+	public Integer getPageNo() {
+		return pageNo;
+	}
+
+	public void setPageSize(Integer pageSize) {
+		this.pageSize = pageSize;
+	}
+
+	public void setPageNo(Integer pageNo) {
+		this.pageNo = pageNo;
 	}
 	
 
