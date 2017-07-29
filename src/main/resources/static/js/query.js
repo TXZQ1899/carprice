@@ -1,45 +1,74 @@
+$("#submit").click(
+		function() {
+			var request = {
+				brand : $("#brand").val(),
+				province : $("#province").val(),
+				city : $("#city").val(),
+				appsku : $("#appsku").val(),
+				channel : $("#channel").val(),
+				zt : $("#zt").val(),
+				key : $("#keyword").val(),
+				start_time : $("#start_time").val(),
+				end_time : $("#end_time").val(),
+				page_type : $("#pageype").val()
+			};
 
-$("#submit").click(function() {
-	var request = {
-		brand : $("#brand").val(),
-		province : $("#province").val(),
-		city : $("#city").val(),
-		appsku : $("#appsku").val(),
-		channel : $("#channel").val(),
-		zt : $("#zt").val(),
-		key : $("#keyword").val(),
-		start_time : $("#start_time").val(),
-		end_time : $("#end_time").val(),
-		page_type : $("#pageype").val()
-	};
+			// var brand = $("#brand").val();
+			// var province = $("#province").val();
+			// var city = $("#city").val();
+			// var appsku = $("#appsku]").val();
+			// var channel = $("#channel]").val();
+			// var zt = $("#zt").val();
+			// var key = $("#keyword").val();
+			// var starttime = $("#start_time").val();
+			// var endtime = $("#end_time").val();
+			// var pageType = $("#pageype").val();
 
-//	var brand = $("#brand").val();
-//	var province = $("#province").val();
-//	var city = $("#city").val();
-//	var appsku = $("#appsku]").val();
-//	var channel = $("#channel]").val();
-//	var zt = $("#zt").val();
-//	var key = $("#keyword").val();
-//	var starttime = $("#start_time").val();
-//	var endtime = $("#end_time").val();
-//	var pageType = $("#pageype").val();
+			$.ajax({
+				url : "api/car/search",
+				type : "POST",
+				dataType : "json",
+				data : JSON.stringify(request),
+				contentType : 'application/json',
+				success : function(data) {
+					
+					var emptyLine = "<tr><td id=\"no_record\" style=\"display:true\" colspan=\"14\" align=\"center\">NO RECORD FOUND</td></tr>";
 
-	$.ajax({
-		url : "api/car/search",
-		type : "POST",
-		dataType : "json",
-		data : JSON.stringify(request),
-		contentType: 'application/json',
-		success : function(data) {
-			if (data == "") {
+					if (data == "") {
+						$("#no_record").remove();
+						$("#request_list_tbl").remove();
+						$("#request_list").append("<tbody id = \"request_list_tbl\"></tbody>")
+						$("#request_list_tbl").append(emptyLine);
+					} else {
+						$("#no_record").remove();
+						$("#request_list_tbl").remove();
+						$("#request_list").append("<tbody id = \"request_list_tbl\"></tbody>")
+						var length = data.list.length;
+						var length = data.list.length;
+						if (length > 0) {
 
-			} else {
-				showTip(data);
-			}
-		}
-	});
+							$.each(data.list, function(index, item) {
+								var line = "<tr>" + "<td>" + item.id + "</td>"
+										+ "<td>" + item.name + "</td>" + "<td>" + item.phone + "</td>"
+										+ "<td>" + item.province + " " + item.city + "</td>" + "<td>" + item.brand + "</td>"
+										+ "<td>" + item.carName + "</td>" + "<td>" + item.serialName + "</td>"
+										+ "<td>" + item.dealer + "</td>" + "<td>" + item.appsku + "</td>"
+										+ "<td>" + item.channel + "</td>" + "<td>" + item.zt + "</td>"
+										+ "<td>&nbsp;</td>" + "<td>" + item.pagetype + "</td>"
+										+ "<td>" + item.requestTime + "</td>" + "</tr>";
+								$("#request_list_tbl").append(line);
+							});
 
-});
+						}
+						else
+						{
+							$("#request_list_tbl").append(emptyLine);
+						}
+					}
+				}
+			});
+
+		});
 
 // 根据车型id和城市获取经销商
 function showGrouponPrice_location(carId, cityCode) {
@@ -140,7 +169,6 @@ function showGrouponPrice_location(carId, cityCode) {
 			});
 }
 
-
 function showTip(text) {
 	$("#models_balloon").text(text).show();
 	setTimeout('$("#models_balloon").hide();', 2000);
@@ -150,4 +178,3 @@ function showSuccess() {
 	$(".popup-succes").show();
 	setTimeout('$(".popup-succes").hide();', 2000);
 }
-
