@@ -18,9 +18,5 @@ public interface CarCityDealerDao extends CrudRepository<CarCityDealer, Long> {
 	@Query("SELECT d from CarCityDealer d WHERE d.cityId = :cityId and d.carId = :carId")
 	List<CarCityDealer> getDealerByCityIdAndCarId(@Param("cityId") String cityId, @Param("carId") Long carId);
 	
-	@Query("SELECT d from CarCityDealer d WHERE d.cityId = :cityId and d.carId = :carId")
-	Page<AskPrice> searchAskPriceRequest(Specification<AskPrice> request, Pageable pageable);
-	
-	
 
 }

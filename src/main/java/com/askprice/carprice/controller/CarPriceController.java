@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.askprice.carprice.common.util.City;
+import com.askprice.carprice.common.util.mail.EmailTools;
 import com.askprice.carprice.dao.ListPage;
 import com.askprice.carprice.dao.PaginationData;
 import com.askprice.carprice.dto.AskPriceRecord;
@@ -25,6 +26,7 @@ import com.askprice.carprice.dto.ResponseResult;
 import com.askprice.carprice.dto.SearchRequest;
 import com.askprice.carprice.entity.CarDealer;
 import com.askprice.carprice.entity.CarInfo;
+import com.askprice.carprice.entity.MailList;
 import com.askprice.carprice.service.CarPriceService;
 
 @RestController
@@ -34,6 +36,9 @@ public class CarPriceController {
 
 	@Autowired
 	private CarPriceService carService;
+	
+	@Autowired
+	private EmailTools email;
 
 	@RequestMapping(value = { "/list" }, method = RequestMethod.GET)
 	public @ResponseBody ResponseResult carListBySerial(
@@ -161,6 +166,42 @@ public class CarPriceController {
 		request.setPageSize(15);
 		request.setPageNo(0);
 		return carService.getAskPriceRecord(request);
+	}
+	
+	@RequestMapping(value = { "/export" }, method = RequestMethod.GET)
+	public @ResponseBody String export() throws Exception {
+		carService.ExportRecord();
+		email.sendEmailWithReport();
+		return "success";
+	}
+	
+	@RequestMapping(value = { "/config/sms" }, method = RequestMethod.GET)
+	public @ResponseBody String smsconfig() throws Exception {
+		return carService.getSmsSwitchValue();
+	}
+	
+	@RequestMapping(value = { "/config/sms" }, method = RequestMethod.PUT)
+	public @ResponseBody String updateSmsConfig(@RequestParam(value = "value", required = true) String value) throws Exception {
+		carService.updateSmsSwitchValue(value);
+		return carService.getSmsSwitchValue();
+	}
+	
+	@RequestMapping(value = { "/config/maillist" }, method = RequestMethod.GET)
+	public @ResponseBody List<MailList> mailList() throws Exception {
+		List<MailList> list = carService.getMailList();
+		return list;
+	}
+	
+	@RequestMapping(value = { "/config/maillist" }, method = RequestMethod.PUT)
+	public @ResponseBody String addMailList(@RequestParam(value = "name", required = true) String name, @RequestParam(value = "mail", required = true) String mail) throws Exception {
+		carService.addMail(mail, name);
+		return "success";
+	}
+	
+	@RequestMapping(value = { "/config/maillist" }, method = RequestMethod.POST)
+	public @ResponseBody String deleteMailList(@RequestParam(value = "chk_ids", required = true) String[] mailIds) throws Exception {
+		carService.deleteMail(mailIds);
+		return "success";
 	}
 	
 //	@RequestMapping(value = { "/saverequest" }, method = RequestMethod.POST)

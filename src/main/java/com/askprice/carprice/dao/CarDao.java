@@ -15,4 +15,6 @@ public interface CarDao {
 	
 	public PaginationData<AskPriceRecord> getAskpriceRequest(SearchRequest request);
 
+	public List<AskPriceRecord> getAskpriceRequestList(SearchRequest request);
+
 }

@@ -12,6 +12,7 @@ import com.askprice.carprice.dto.CarInfoDto;
 import com.askprice.carprice.dto.SearchRequest;
 import com.askprice.carprice.entity.CarDealer;
 import com.askprice.carprice.entity.CarInfo;
+import com.askprice.carprice.entity.MailList;
 
 public interface CarPriceService {
 	
@@ -28,5 +29,17 @@ public interface CarPriceService {
 	public String saveRequest(AskPriceRequest request);
 	
 	public PaginationData<AskPriceRecord> getAskPriceRecord(SearchRequest request);
+	
+	public void ExportRecord() throws Exception;
+	
+	public String getSmsSwitchValue();
+	
+	public void updateSmsSwitchValue(String value);
+	
+	public List<MailList> getMailList();
+	
+	public void addMail(String mail, String name);
+	
+	public void deleteMail(String[] id);
 
 }

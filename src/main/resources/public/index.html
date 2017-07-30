@@ -67,7 +67,7 @@
 						<input id="inPhone" name="phone" type="tel" class="current" placeholder="请输入您的手机号" maxlength="11" />
 					</li>
 					
-					<li>
+					<li id="sms_code_block" hidden="true">
 		                <label>验<em class="w6"></em>证<em class="w6"></em>码：</label>
 		                <input id="code" name="code" type="text" class="current" placeholder="请输入验证码" maxlength="11" style="width:30%" />
 		                <button id="btn" style="width:100px;height:35px;margin-left:120px;line-height:4px;margin-top:10px" >获取验证码</button>
@@ -80,8 +80,8 @@
 						<div hidden="true" id="choicecitycode"></div>
 						<div hidden="true" id="selectprovince"></div>
 					</li>
-
 				</ul>
+				<div hidden="true" id="needSMS"></div>
 				<div class="subinpt">
 					<input type="checkbox" class="infchek" id="check2"><label for="check2"></label>
 					<i>我同意</i>
@@ -222,6 +222,7 @@
 <script type="text/javascript" src="js/hf.js"></script>
 <script type="text/javascript" src="js/right.js"></script>
 <script type="text/javascript" src="js/sms.js"></script>
+<script type="text/javascript" src="js/query.js"></script>
 
 <script type="text/javascript">
 
@@ -239,10 +240,6 @@
 	}
 
 $(function(){
-	//alert("奔驰GLA级");
-	// 获取车型
-	// getCarInfo("4477", "124769");
-	// 定位
 	// serialId=4477&carId=124769&brand=奔驰&channel=SY001&appsku=h5_sy&pageType=bcgla&zt=AT0173#flag
 	var requestParams = new Object();
 	requestParams = GetRequest();
@@ -254,7 +251,9 @@ $(function(){
 	appsku = requestParams['appsku'];
 	pageType = requestParams['pageType'];
 	zt = requestParams['zt'];
+	getSmsConfig();
 	getCarInfo(serialId, carId);
 	getLocation();
+	
 });
 </script>
