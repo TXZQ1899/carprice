@@ -103,7 +103,8 @@
 		}
 		
 		var reqId = $("#reqId").text();
-		if(reqId==""){
+		var needSms = $("#needSMS").text();
+		if(needSms=="ON" && reqId==""){
 			showTip("请进行手机短信验证");
 			return;
 		}
@@ -116,13 +117,15 @@
 		var channel = $("#channel").val();
 		var zt = $("#zt").val();
 		var key = $("#key").val();
-		
-		var code = $("#code").val();
+		var code = "";
+		if (needSms == "ON")
+		{
+			var code = $("input[name=code]").val();
+		}
 		var pageType = $("#pageType").val();
 		var serialId = $("#serialId").val();
 		var name = $("input[name=name]").val();
 		var phone = $("input[name=phone]").val();
-		var code = $("input[name=code]").val();
 		var brand = $("#brand").val();
 		$("#reqId").text("");
 		$.ajax({
@@ -250,6 +253,25 @@
 			$('#arrowup').toggle();
 		}
 	});
+	
+	function getSmsConfig(){
+		$.ajax({
+	        url: "api/car/config/sms",
+	        type: "GET",
+	        dataType: "text",
+	        data: "",
+	        success: function(data) {
+	            if (data == "OFF") {
+	                $("#needSMS").text("OFF");
+	                $("#sms_code_block").remove();
+	            } else {
+	            	$("#needSMS").text("ON");
+	            	$("#sms_code_block").attr("hidden", "false");
+	            }
+
+	        }
+	    });
+  	}
 	
 	// 定位
 	var y=$("#choicecity");

@@ -1,12 +1,10 @@
 package com.askprice.carprice.dao;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Repository;
 
 import com.askprice.carprice.dto.AskPriceRecord;
@@ -71,6 +69,18 @@ public class CarDaoImpl extends CommonDao implements CarDao  {
 		listBySqlDto(listPage, countSql, sql, AskPriceRecord.class);
 		return buildPagination(request.getPageSize(), request.getPageNo(), listPage );
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<AskPriceRecord> getAskpriceRequestList(SearchRequest request) {
+		List<AskPriceRecord> list = new ArrayList<>();
+		String sql = getSQLBySearchRequest(request, false);
+		list = (List<AskPriceRecord>) queryListEntity(sql, null, AskPriceRecord.class);
+		
+		return list;
+	}
+	
+	
 	
 	private String getSQLBySearchRequest(SearchRequest request, Boolean forCount) 
 	{

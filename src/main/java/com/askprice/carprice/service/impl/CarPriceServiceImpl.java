@@ -1,7 +1,14 @@
 package com.askprice.carprice.service.impl;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +17,7 @@ import javax.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
@@ -18,11 +26,15 @@ import com.askprice.carprice.common.cache.SmsSession;
 import com.askprice.carprice.common.message.client.sms.TemplateSMSSender;
 import com.askprice.carprice.common.util.IPTools;
 import com.askprice.carprice.common.util.RemoteAPIProxy;
+import com.askprice.carprice.common.util.excel.ExcelUtil;
+import com.askprice.carprice.common.util.mail.EmailTools;
 import com.askprice.carprice.dao.CarCityDealerDao;
 import com.askprice.carprice.dao.CarDao;
 import com.askprice.carprice.dao.CarDealerDao;
 import com.askprice.carprice.dao.CarPriceDao;
+import com.askprice.carprice.dao.ConfigDao;
 import com.askprice.carprice.dao.ListPage;
+import com.askprice.carprice.dao.MailListDao;
 import com.askprice.carprice.dao.PaginationData;
 import com.askprice.carprice.dto.AskPriceRecord;
 import com.askprice.carprice.dto.AskPriceRequest;
@@ -32,6 +44,8 @@ import com.askprice.carprice.entity.AskRequest;
 import com.askprice.carprice.entity.CarCityDealer;
 import com.askprice.carprice.entity.CarDealer;
 import com.askprice.carprice.entity.CarInfo;
+import com.askprice.carprice.entity.Config;
+import com.askprice.carprice.entity.MailList;
 import com.askprice.carprice.service.CarPriceService;
 
 @Service
@@ -40,6 +54,10 @@ public class CarPriceServiceImpl implements CarPriceService {
 	
 	public Logger logger = LoggerFactory.getLogger(CarPriceServiceImpl.class);
 	
+	private static SimpleDateFormat dtFormat = new SimpleDateFormat("yyyy-MM-dd");
+	
+	private static String SMS_SWITCH = "SMS_SWITCH";
+	
 	@Autowired
 	private CarPriceDao carPriceDao;
 	
@@ -47,7 +65,19 @@ public class CarPriceServiceImpl implements CarPriceService {
 	private CarDealerDao carDealerDao;
 	
 	@Autowired
+	private ConfigDao configDao;
+	
+	@Autowired
+	private MailListDao mailDao;
+	
+	@Autowired
 	private CarCityDealerDao carCityDealerDao;
+	
+//	@Value("${export.file.name}")
+	 private static String fileName = "询价记录";
+	
+	@Value("${export.file.folder}")
+    private String folder;
 	
 	@Autowired
 	private SmsSession smsSession;
@@ -111,29 +141,29 @@ public class CarPriceServiceImpl implements CarPriceService {
 
 	@Override
 	public String sendMessage(String phone) {
+		String smsConfig = getSmsSwitchValue();
+		if (smsConfig.equals("OFF")) return "";
+		
 		SmsCode smscode = new SmsCode(phone, 2);
 		String reqId = UUID.randomUUID().toString().replaceAll("-", "");
 		smsSession.put(reqId, smscode);
-		System.out.println(smscode.getCode());
-		return reqId;
 		
-		
-//		HashMap<String, Object> result = null;
-//		String[] message = new String[]{smscode.getCode(), smscode.getExpiredMinutes().toString()};
-//		result = sender.getSmsSender().sendTemplateSMS(phone, "159273" ,message);
-//		if("000000".equals(result.get("statusCode"))){
-//			return reqId;
-//		}else{
-//			return "-1";
-//		}
+		HashMap<String, Object> result = null;
+		String[] message = new String[]{smscode.getCode(), smscode.getExpiredMinutes().toString()};
+		result = sender.getSmsSender().sendTemplateSMS(phone, "159273" ,message);
+		if("000000".equals(result.get("statusCode"))){
+			return reqId;
+		}else{
+			return "-1";
+		}
 	}
 
 	@Override
 	public String saveRequest(AskPriceRequest request) {
 		
 		String reqId = request.getReqId();
-//		String errorMessage = VerifySmsCode(reqId, request.getSmscode());
-		String errorMessage = "";
+		String errorMessage = VerifySmsCode(reqId, request.getSmscode());
+//		String errorMessage = "";
 		
 		if (!errorMessage.equals("")) return errorMessage;
 		
@@ -162,6 +192,10 @@ public class CarPriceServiceImpl implements CarPriceService {
 	
 	private String VerifySmsCode(String reqId, String actualCode) 
 	{
+		String smsConfig = getSmsSwitchValue();
+		
+		if (smsConfig.equals("OFF")) return "";
+		
 		if (reqId == null || reqId.equals("")) 
 		{
 			return "短信验证码验证不通过,请重新验证.";
@@ -191,6 +225,82 @@ public class CarPriceServiceImpl implements CarPriceService {
 	@Override
 	public PaginationData<AskPriceRecord> getAskPriceRecord(SearchRequest request) {
 		return carDao.getAskpriceRequest(request);
+	}
+
+	@Override
+	public void ExportRecord() throws Exception {
+		List<AskPriceRecord> list = new ArrayList<AskPriceRecord>();
+		
+		SearchRequest request = new SearchRequest();
+		String preDate = EmailTools.getDateBefore(1);
+		request.setStart_time(preDate);
+		request.setEnd_time(preDate);
+		list = carDao.getAskpriceRequestList(request);
+        
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("title", "汽车询价记录表");
+        map.put("total", list.size()+" 条");
+        map.put("date", preDate);
+        
+        String output_file = fileName + "_" + preDate + ".xls";
+
+        ExcelUtil.getInstance().exportObj2ExcelByTemplate(map, "ask_price_request_template.xls", new FileOutputStream(folder + output_file),
+                list, AskPriceRecord.class, true);
+	}
+
+	@Override
+	public String getSmsSwitchValue() {
+
+		Config smsSwitch = configDao.findByConfigName(SMS_SWITCH);
+		if (smsSwitch == null) 
+		{
+			smsSwitch = new Config();
+			smsSwitch.setConfigName(SMS_SWITCH);
+			smsSwitch.setConfigValue("OFF");
+			configDao.save(smsSwitch);
+		}
+		
+		return smsSwitch.getConfigValue();
+	}
+
+	@Override
+	public void updateSmsSwitchValue(String value) {
+		Config smsSwitch = configDao.findByConfigName(SMS_SWITCH);
+		if (smsSwitch == null) 
+		{
+			smsSwitch = new Config();
+			smsSwitch.setConfigName(SMS_SWITCH);
+			smsSwitch.setConfigValue(value);
+			configDao.save(smsSwitch);
+		}
+		else 
+		{
+			smsSwitch.setConfigValue(value);
+			configDao.save(smsSwitch);
+		}
+		
+	}
+
+	@Override
+	public List<MailList> getMailList() {
+		List<MailList> list = mailDao.getAllMails();
+		return list;
+	}
+
+	@Override
+	public void addMail(String mail, String name) {
+		MailList newMail = new MailList();
+		newMail.setMail(mail);
+		newMail.setName(name);
+		mailDao.save(newMail);
+	}
+
+	@Override
+	public void deleteMail(String[] idArray) {
+		for(String delId : idArray) 
+		{
+			mailDao.delete(Long.parseLong(delId));
+		}
 	}
 
 }

@@ -38,26 +38,26 @@ public class AskRequest implements Serializable {
 	@Column(name = "brand")
 	private String brand;
 
-	@Column(name = "serialId", insertable = false, updatable = false)
+	@Column(name = "serialId")
 	private Long serialId;
 	
-	@OneToOne
-	@JoinColumn(name = "cs_id")
-	private CarSerial serial;
+//	@OneToOne
+//	@JoinColumn(name = "cs_id")
+//	private CarSerial serial;
 
-	@Column(name = "carId", insertable = false, updatable = false)
+	@Column(name = "carId")
 	private Long carId;
 	
-	@OneToOne
-	@JoinColumn(name = "car_id")
-	private CarInfo car;
+//	@OneToOne
+//	@JoinColumn(name = "car_id")
+//	private CarInfo car;
 
-	@Column(name = "dealerId", insertable = false, updatable = false)
+	@Column(name = "dealerId")
 	private Long dealerId;
 	
-	@OneToOne
-	@JoinColumn(name = "dealerId")
-	private CarDealer dealer;
+//	@OneToOne
+//	@JoinColumn(name = "dealerId")
+//	private CarDealer dealer;
 
 	@Column(name = "appsku")
 	private String appsku;
@@ -183,29 +183,29 @@ public class AskRequest implements Serializable {
 		return requestTime;
 	}
 
-	public CarSerial getSerial() {
-		return serial;
-	}
-
-	public CarInfo getCar() {
-		return car;
-	}
-
-	public CarDealer getDealer() {
-		return dealer;
-	}
-
-	public void setSerial(CarSerial serial) {
-		this.serial = serial;
-	}
-
-	public void setCar(CarInfo car) {
-		this.car = car;
-	}
-
-	public void setDealer(CarDealer dealer) {
-		this.dealer = dealer;
-	}
+//	public CarSerial getSerial() {
+//		return serial;
+//	}
+//
+//	public CarInfo getCar() {
+//		return car;
+//	}
+//
+//	public CarDealer getDealer() {
+//		return dealer;
+//	}
+//
+//	public void setSerial(CarSerial serial) {
+//		this.serial = serial;
+//	}
+//
+//	public void setCar(CarInfo car) {
+//		this.car = car;
+//	}
+//
+//	public void setDealer(CarDealer dealer) {
+//		this.dealer = dealer;
+//	}
 
 	public void setRequestTime(Date requestTime) {
 		this.requestTime = requestTime;

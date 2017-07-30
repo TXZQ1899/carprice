@@ -1,7 +1,9 @@
 package com.askprice.carprice.common.util;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,11 +24,17 @@ import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.askprice.carprice.common.util.mail.EmailTools;
+
 public class IPTools {
 	
 	public static Logger logger = LoggerFactory.getLogger(IPTools.class);
 
 	public static void main(String[] args) {
+		
+		String date = EmailTools.getDateBefore(1);
+		System.out.println(date);
+		
 
 	}
 
