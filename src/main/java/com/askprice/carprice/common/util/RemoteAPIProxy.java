@@ -44,17 +44,8 @@ public class RemoteAPIProxy {
 	
 	public static void main(String[] args) 
 	{
-		City city = null;
-		try{
-			city = City.valueOf("dfffff");
-		}
-		catch(Exception e)
-		{
-		}
-		if (city == null)
-		{
-			System.out.println("can not find city");
-		}
+		List<CarDealer> list = getCarDealerByCarId("121144","502");
+		list.forEach(dealer -> System.out.println(dealer.toString()));
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -112,7 +103,7 @@ public class RemoteAPIProxy {
 		params.put(RemoteAPI.CommonParams.InterfaceID.name(), RemoteAPI.InterfaceID);
 		params.put(RemoteAPI.CommonParams.op.name(), operation.name());
 		params.put("startRcord", "1");
-		params.put("endRecord", "6");
+		params.put("endRecord", "50");
 	}
 	  
     public static JavaType getCollectionType(ObjectMapper mapper, Class<?> collectionClass, Class<?>... elementClasses) {   

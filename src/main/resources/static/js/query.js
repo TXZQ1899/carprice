@@ -8,7 +8,7 @@ $("#submit")
                 appsku: $("#appsku").val(),
                 channel: $("#channel").val(),
                 zt: $("#zt").val(),
-                key: $("#keyword").val(),
+                key: $("#key").val(),
                 start_time: $("#start_time").val(),
                 end_time: $("#end_time").val(),
                 page_type: $("#pageype").val()

@@ -121,9 +121,9 @@
 		</div>
 <form action="" method="post" id="homeCitys">
 <!-- 隐藏数据 -->
-<input type="hidden" id="channel" name="channel" value="SY001" />
-<input type="hidden" id="appsku" name="appsku" value="h5_sy" />
-<input type="hidden" id="zt" name="zt" value="AT0173" />
+<input type="hidden" id="channel" name="channel" value="" />
+<input type="hidden" id="appsku" name="appsku" value="" />
+<input type="hidden" id="zt" name="zt" value="" />
 <input type="hidden" id="key" name="key" value="" />
 <input type="hidden" id="carId" name="carId" value="" />
 <input type="hidden" id="brand" name="brand" value="" />
@@ -243,14 +243,23 @@ $(function(){
 	// serialId=4477&carId=124769&brand=奔驰&channel=SY001&appsku=h5_sy&pageType=bcgla&zt=AT0173#flag
 	var requestParams = new Object();
 	requestParams = GetRequest();
-	var serialId,carId,brand,channel,appsku,pageType,zt;
+	var serialId,carId,brand,channel,appsku,pageType,zt,key;
 	serialId = requestParams['serialId'];
+	key = requestParams['key'];
 	carId = requestParams['carId'];
 	brand = requestParams['brand'];
 	channel = requestParams['channel'];
 	appsku = requestParams['appsku'];
 	pageType = requestParams['pageType'];
 	zt = requestParams['zt'];
+	$("#serialId").val(serialId);
+	$("#carId").val(carId);
+	$("#brand").val(brand);
+	$("#channel").val(channel);
+	$("#appsku").val(appsku);
+	$("#pageType").val(pageType);
+	$("#zt").val(zt);
+	$("#key").val(key);
 	getSmsConfig();
 	getCarInfo(serialId, carId);
 	getLocation();

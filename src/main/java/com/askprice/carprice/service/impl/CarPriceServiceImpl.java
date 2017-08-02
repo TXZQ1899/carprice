@@ -129,10 +129,27 @@ public class CarPriceServiceImpl implements CarPriceService {
 			
 			dealerList.forEach(dealer -> 
 			{
-				CarDealer newDealer = carDealerDao.save(dealer);
-				CarCityDealer cityDealer = new CarCityDealer();
-				cityDealer.initCityDealer(cityId, Long.parseLong(carId), newDealer.getId());
-				carCityDealerDao.save(cityDealer);
+				CarDealer tmp = carDealerDao.findByDealerId(dealer.getDealerId());
+				if (tmp==null) 
+				{
+					CarDealer newDealer = carDealerDao.save(dealer);
+					CarCityDealer cityDealer = new CarCityDealer();
+					cityDealer.initCityDealer(cityId, Long.parseLong(carId), newDealer.getId());
+					carCityDealerDao.save(cityDealer);
+				}
+				else 
+				{
+					tmp.setNewsTitle(dealer.getNewsTitle());
+					tmp.setNewsRemainingDays(dealer.getNewsRemainingDays());
+					tmp.setNewsUrl(dealer.getNewsUrl());
+					tmp.setPromotePrice(dealer.getPromotePrice());
+					tmp.setVendorPrice(dealer.getVendorPrice());
+					carDealerDao.save(tmp);
+					CarCityDealer cityDealer = new CarCityDealer();
+					cityDealer.initCityDealer(cityId, Long.parseLong(carId), tmp.getId());
+					carCityDealerDao.save(cityDealer);
+				}
+				
 			});
 		}
 		
