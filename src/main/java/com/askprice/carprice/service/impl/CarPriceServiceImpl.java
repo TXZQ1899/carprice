@@ -1,12 +1,10 @@
 package com.askprice.carprice.service.impl;
 
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -28,12 +26,12 @@ import com.askprice.carprice.common.util.IPTools;
 import com.askprice.carprice.common.util.RemoteAPIProxy;
 import com.askprice.carprice.common.util.excel.ExcelUtil;
 import com.askprice.carprice.common.util.mail.EmailTools;
+import com.askprice.carprice.dao.AskPriceRequestDao;
 import com.askprice.carprice.dao.CarCityDealerDao;
 import com.askprice.carprice.dao.CarDao;
 import com.askprice.carprice.dao.CarDealerDao;
 import com.askprice.carprice.dao.CarPriceDao;
 import com.askprice.carprice.dao.ConfigDao;
-import com.askprice.carprice.dao.ListPage;
 import com.askprice.carprice.dao.MailListDao;
 import com.askprice.carprice.dao.PaginationData;
 import com.askprice.carprice.dto.AskPriceRecord;
@@ -60,6 +58,9 @@ public class CarPriceServiceImpl implements CarPriceService {
 	
 	@Autowired
 	private CarPriceDao carPriceDao;
+	
+	@Autowired
+	private AskPriceRequestDao askRequestDao;
 	
 	@Autowired
 	private CarDealerDao carDealerDao;
@@ -241,7 +242,10 @@ public class CarPriceServiceImpl implements CarPriceService {
 
 	@Override
 	public PaginationData<AskPriceRecord> getAskPriceRecord(SearchRequest request) {
-		return carDao.getAskpriceRequest(request);
+		PaginationData<AskPriceRecord> page = carDao.getAskpriceRequest(request);
+		page.setGroup_count(carDao.getCountOfRequestPhone(request));
+		
+		return page;
 	}
 
 	@Override
@@ -318,6 +322,11 @@ public class CarPriceServiceImpl implements CarPriceService {
 		{
 			mailDao.delete(Long.parseLong(delId));
 		}
+	}
+
+	@Override
+	public List<String> getRequestedBrandList() {
+		return askRequestDao.getAllBrand();
 	}
 
 }

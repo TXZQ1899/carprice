@@ -204,6 +204,11 @@ public class CarPriceController {
 		return "success";
 	}
 	
+	@RequestMapping(value = { "/query/brandlist" }, method = RequestMethod.GET)
+	public @ResponseBody List<String> getBrandList() throws Exception {
+		return carService.getRequestedBrandList();
+	}
+	
 //	@RequestMapping(value = { "/saverequest" }, method = RequestMethod.POST)
 //	public @ResponseBody String saveRequest(@RequestBody AskPriceRequest request) throws Exception {
 //		carService.saveRequest(request);

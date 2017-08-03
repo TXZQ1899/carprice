@@ -145,12 +145,21 @@ public class CarDaoImpl extends CommonDao implements CarDao  {
 			sql = sql + " AND r.zt = '" + request.getZt() + "'";
 		}
 		
+		sql = sql + " order by requestTime desc";
+		
 		if (forCount) 
 		{
 			return "select count(*) " + sql.substring(sql.indexOf("FROM"));
 		}
 		
 		return sql; 
+	}
+
+	@Override
+	public Integer getCountOfRequestPhone(SearchRequest request) {
+		String sql = getSQLBySearchRequest(request, true);
+		sql = sql.replace("select count(*)", "select count(distinct(phone))");
+		return getCountBy(sql, null);
 	}
 
 }

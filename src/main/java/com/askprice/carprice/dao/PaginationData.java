@@ -13,6 +13,7 @@ public class PaginationData<T> implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private int record_count;
+	private int group_count;
 	private boolean lastpage;
 	private int total_page;
 	private int page_no;
@@ -109,6 +110,14 @@ public class PaginationData<T> implements Serializable {
 	public void setPage_size(int page_size)
 	{
 		this.page_size = page_size;
+	}
+
+	public int getGroup_count() {
+		return group_count;
+	}
+
+	public void setGroup_count(int group_count) {
+		this.group_count = group_count;
 	}
 	
 }

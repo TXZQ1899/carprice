@@ -41,5 +41,7 @@ public interface CarPriceService {
 	public void addMail(String mail, String name);
 	
 	public void deleteMail(String[] id);
+	
+	public List<String> getRequestedBrandList();
 
 }
