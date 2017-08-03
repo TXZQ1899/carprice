@@ -19,10 +19,35 @@
 
 		<div class="form-inline" style="width: 100%">
 			<div class="form-group">
-				<label for="brand">品&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;牌:</label> <input
-					type="text" class="form-control" id="brand">
+			<label for="speed">品&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;牌:</label>
+			    <select name="brand" class="form-control" id="brand"></select>
 			</div>
 			&nbsp;&nbsp;&nbsp;&nbsp;
+			<div class="form-group">
+				<label for="zt">主&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;题:</label>
+				<select name="zt" class="form-control" id="zt"></select>
+			</div>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;
+			<div class="form-group">
+				<label for="channel">渠&nbsp;&nbsp;&nbsp;&nbsp;道:</label>
+				<select name="channel" class="form-control" id="channel"></select> 
+			</div>
+			&nbsp;&nbsp;&nbsp;&nbsp;
+			<div class="form-group">
+				<label for="appsku">数据来源:</label> 
+				<select name="appsku" class="form-control" id="appsku"></select> 
+			</div>
+			&nbsp;&nbsp;&nbsp;&nbsp;
+			<div class="form-group">
+				<label for="pagetype">pageType:</label>
+				<select name="pagetype" class="form-control" id="pagetype"></select>  
+			</div>
+
+
+		</div>
+		<div style="height: 10px"></div>
+		<div class="form-inline" style="width: 100%">
 			<div class="form-group">
 				<label for="province_city">省&nbsp;&nbsp;&nbsp;&nbsp;市:</label>
 				<div id="province_city" data-toggle="distpicker" class="form-group">
@@ -30,7 +55,7 @@
 						<label class="sr-only" for="province">Province</label> <select
 							class="form-control" id="province" style="width: 120px"></select>
 					</div>
-					&nbsp;&nbsp-&nbsp;&nbsp;
+					&nbsp;&nbsp;-&nbsp;&nbsp;
 					<div class="form-group">
 						<label class="sr-only" for="city">City</label> <select
 							class="form-control" id="city" style="width: 120px"></select>
@@ -39,49 +64,28 @@
 			</div>
 			&nbsp;&nbsp;&nbsp;&nbsp;
 			<div class="form-group">
-				<label for="zt">主&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;题:</label>
-				<input type="text" class="form-control" id="zt">
-			</div>
-
-
-		</div>
-		<div style="height: 10px"></div>
-		<div class="form-inline" style="width: 100%">
-
-			<div class="form-group">
-				<label for="keyword">关&nbsp;键&nbsp;字:</label> <input type="text"
-					class="form-control" id="keyword">
-			</div>
-			&nbsp;&nbsp;
-			<div class="form-group">
 				<label for="req_time">咨询时间:</label> <input type="text" id="start_time" class="form-control" style="width: 120px"> &nbsp;&nbsp;-&nbsp;&nbsp;<input type="text" class="form-control" id="end_time" style="width:120px">
 			</div>
 			&nbsp;&nbsp;&nbsp;&nbsp;
 			<div class="form-group">
-				<label for="channel">渠&nbsp;&nbsp;&nbsp;&nbsp;道:</label> <input
-					type="text" class="form-control" id="channel">
-			</div>
-
-
-		</div>
-		<div class="form-group" id="datepicker"></div>
-		<div style="height: 10px"></div>
-		<div class="form-inline">
-			<div class="form-group">
-				<label for="appsku">数据来源:</label> <input type="text"
-					class="form-control" id="appsku">
-			</div>
-			&nbsp;&nbsp;&nbsp;
-			<div class="form-group">
-				<label for="pagetype">pageType:</label> <input type="email"
-					class="form-control" id="pagetype">
-			</div>
-			&nbsp;&nbsp;&nbsp;
-			<div class="form-group">
 				<input type="button"
 					class="form-control" id="submit" value = "查询">
 			</div>
+
+
 		</div>
+		<div style="height: 10px"></div>
+<!-- 		<div class="form-inline"> -->
+<!-- 			<div class="form-group"> -->
+<!-- 				<label for="keyword">关&nbsp;键&nbsp;字:</label> <input type="text" -->
+<!-- 					class="form-control" id="keyword"> -->
+<!-- 			</div> -->
+<!-- 			&nbsp;&nbsp;&nbsp; -->
+<!-- 			<div class="form-group"> -->
+<!-- 				<input type="button" -->
+<!-- 					class="form-control" id="submit" value = "查询"> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
 		<h5 class="page-header"></h5>
 		<table class="table table-hover" id = "request_list">
 			<thead>
@@ -91,8 +95,8 @@
 					<th>手机号</th>
 					<th>城市</th>
 					<th>品牌</th>
-					<th>车型</th>
 					<th>汽车车款</th>
+					<th>车型</th>
 					<th>经销商</th>
 					<th>数据来源</th>
 					<th>渠道</th>
@@ -125,6 +129,8 @@
 	  $(function() {
 			$( "#start_time" ).datepicker();    
 			$( "#end_time" ).datepicker(); 
+			initQueryPage();
+			
 		});
   </script>
 

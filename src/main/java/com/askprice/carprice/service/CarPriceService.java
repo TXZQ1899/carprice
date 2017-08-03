@@ -43,5 +43,13 @@ public interface CarPriceService {
 	public void deleteMail(String[] id);
 	
 	public List<String> getRequestedBrandList();
+	
+	public List<String> getRequestedZtList();
+	
+	public List<String> getRequestedAppskuList();
+	
+	public List<String> getRequestedPageTypeList();
+	
+	public List<String> getRequestedChannelList();
 
 }

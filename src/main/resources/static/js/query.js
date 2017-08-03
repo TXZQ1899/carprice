@@ -116,6 +116,103 @@ function loadMailList() {
     });
 }
 
+function initQueryPage() {
+    $.ajax({
+        url: "api/car/query/brandlist",
+        type: "GET",
+        dataType: "json",
+        data: "",
+        success: function(data) {
+        	$("#brand").empty();
+        	$("#brand").append("<option disabled selected>请选择</option>");
+            var length = data.length;
+            if (length > 0) {
+                $.each(data, function(index,
+                    item) {
+                		var opt = "<option value='" + item + "'>" + item + "</option>"
+                		$("#brand").append(opt);
+                });
+            }
+        }
+    });
+    
+    $.ajax({
+        url: "api/car/query/ztlist",
+        type: "GET",
+        dataType: "json",
+        data: "",
+        success: function(data) {
+        	$("#zt").empty();
+        	$("#zt").append("<option disabled selected>请选择</option>");
+            var length = data.length;
+            if (length > 0) {
+                $.each(data, function(index,
+                    item) {
+                		var opt = "<option value='" + item + "'>" + item + "</option>"
+                		$("#zt").append(opt);
+                });
+            }
+        }
+    });
+    
+    $.ajax({
+        url: "api/car/query/pagetypelist",
+        type: "GET",
+        dataType: "json",
+        data: "",
+        success: function(data) {
+        	$("#pagetype").empty();
+        	$("#pagetype").append("<option disabled selected>请选择</option>");
+            var length = data.length;
+            if (length > 0) {
+                $.each(data, function(index,
+                    item) {
+                		var opt = "<option value='" + item + "'>" + item + "</option>"
+                		$("#pagetype").append(opt);
+                });
+            }
+        }
+    });
+    
+    $.ajax({
+        url: "api/car/query/appskulist",
+        type: "GET",
+        dataType: "json",
+        data: "",
+        success: function(data) {
+        	$("#appsku").empty();
+        	$("#appsku").append("<option disabled selected>请选择</option>");
+            var length = data.length;
+            if (length > 0) {
+                $.each(data, function(index,
+                    item) {
+                		var opt = "<option value='" + item + "'>" + item + "</option>"
+                		$("#appsku").append(opt);
+                });
+            }
+        }
+    });
+    
+    $.ajax({
+        url: "api/car/query/channellist",
+        type: "GET",
+        dataType: "json",
+        data: "",
+        success: function(data) {
+        	$("#channel").empty();
+        	$("#channel").append("<option disabled selected>请选择</option>");
+            var length = data.length;
+            if (length > 0) {
+                $.each(data, function(index,
+                    item) {
+                		var opt = "<option value='" + item + "'>" + item + "</option>"
+                		$("#channel").append(opt);
+                });
+            }
+        }
+    });
+}
+
 $("#save_sms_switch").click(
     function() {
         var value = $("input[name='sms_switch']:checked").val();

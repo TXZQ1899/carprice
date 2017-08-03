@@ -329,4 +329,24 @@ public class CarPriceServiceImpl implements CarPriceService {
 		return askRequestDao.getAllBrand();
 	}
 
+	@Override
+	public List<String> getRequestedZtList() {
+		return askRequestDao.getAllSubject();
+	}
+
+	@Override
+	public List<String> getRequestedAppskuList() {
+		return askRequestDao.getAllAppsku();
+	}
+
+	@Override
+	public List<String> getRequestedPageTypeList() {
+		return askRequestDao.getAllPageType();
+	}
+
+	@Override
+	public List<String> getRequestedChannelList() {
+		return askRequestDao.getAllChannel();
+	}
+
 }

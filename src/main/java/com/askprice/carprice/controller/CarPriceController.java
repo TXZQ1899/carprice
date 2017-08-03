@@ -209,6 +209,26 @@ public class CarPriceController {
 		return carService.getRequestedBrandList();
 	}
 	
+	@RequestMapping(value = { "/query/channellist" }, method = RequestMethod.GET)
+	public @ResponseBody List<String> getChannelList() throws Exception {
+		return carService.getRequestedChannelList();
+	}
+	
+	@RequestMapping(value = { "/query/appskulist" }, method = RequestMethod.GET)
+	public @ResponseBody List<String> getAppskuList() throws Exception {
+		return carService.getRequestedAppskuList();
+	}
+	
+	@RequestMapping(value = { "/query/pagetypelist" }, method = RequestMethod.GET)
+	public @ResponseBody List<String> getPagetypeList() throws Exception {
+		return carService.getRequestedPageTypeList();
+	}
+	
+	@RequestMapping(value = { "/query/ztlist" }, method = RequestMethod.GET)
+	public @ResponseBody List<String> getZtList() throws Exception {
+		return carService.getRequestedZtList();
+	}
+	
 //	@RequestMapping(value = { "/saverequest" }, method = RequestMethod.POST)
 //	public @ResponseBody String saveRequest(@RequestBody AskPriceRequest request) throws Exception {
 //		carService.saveRequest(request);
