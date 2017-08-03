@@ -21,9 +21,9 @@ public class SearchRequest {
 	
 	private String page_type;
 	
-	private Integer pageSize;
+	private Integer page_size;
 	
-	private Integer pageNo;
+	private Integer page_no;
 	
 	
 
@@ -107,21 +107,20 @@ public class SearchRequest {
 		this.page_type = page_type;
 	}
 
-	public Integer getPageSize() {
-		return pageSize;
+	public Integer getPage_size() {
+		return page_size;
 	}
 
-	public Integer getPageNo() {
-		return pageNo;
+	public void setPage_size(Integer page_size) {
+		this.page_size = page_size;
 	}
 
-	public void setPageSize(Integer pageSize) {
-		this.pageSize = pageSize;
+	public Integer getPage_no() {
+		return page_no;
 	}
 
-	public void setPageNo(Integer pageNo) {
-		this.pageNo = pageNo;
+	public void setPage_no(Integer page_no) {
+		this.page_no = page_no;
 	}
-	
 
 }

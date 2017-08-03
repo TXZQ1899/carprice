@@ -162,9 +162,16 @@ public class CarPriceController {
 	@RequestMapping(value = { "/search" }, method = RequestMethod.POST)
 	public @ResponseBody PaginationData<AskPriceRecord> search(@RequestBody SearchRequest request) throws Exception {
 		
-		System.out.println(request.getBrand());
-		request.setPageSize(15);
-		request.setPageNo(0);
+		if(request.getPage_size() == null) 
+		{
+			request.setPage_size(15);
+		}
+		
+		if (request.getPage_no() == null) 
+		{
+			request.setPage_no(1);
+		}
+		
 		return carService.getAskPriceRecord(request);
 	}
 	

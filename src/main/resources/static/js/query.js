@@ -1,65 +1,138 @@
 $("#submit")
-    .click(
-        function() {
-            var request = {
-                brand: $("#brand").val(),
-                province: $("#province").val(),
-                city: $("#city").val(),
-                appsku: $("#appsku").val(),
-                channel: $("#channel").val(),
-                zt: $("#zt").val(),
-                key: $("#key").val(),
-                start_time: $("#start_time").val(),
-                end_time: $("#end_time").val(),
-                page_type: $("#pageype").val()
-            };
+    .click(function() {
+        doSearch();
+    });
 
-            $
-                .ajax({
-                    url: "api/car/search",
-                    type: "POST",
-                    dataType: "json",
-                    data: JSON.stringify(request),
-                    contentType: 'application/json',
-                    success: function(data) {
+$("#page_size")
+	.change(function() { 
+		$("#page_no").val(1);
+		doSearch(); 
+	});
 
-                        var emptyLine = "<tr><td id=\"no_record\" style=\"display:true\" colspan=\"14\" align=\"center\">NO RECORD FOUND</td></tr>";
+$("#nextp")
+.click(function() { 
+	var cur_page_no = Number($("#page_no").val());
+	cur_page_no = cur_page_no + 1;
+	$("#page_no").val(cur_page_no);
+	doSearch(); 
+});
 
-                        if (data == "") {
-                            $("#no_record").remove();
-                            $("#request_list_tbl").remove();
-                            $("#request_list")
-                                .append(
-                                    "<tbody id = \"request_list_tbl\"></tbody>")
-                            $("#request_list_tbl")
-                                .append(emptyLine);
-                        } else {
-                            $("#no_record").remove();
-                            $("#request_list_tbl").remove();
-                            $("#request_list")
-                                .append(
-                                    "<tbody id = \"request_list_tbl\"></tbody>")
+$("#prep")
+.click(function() { 
+	var cur_page_no = Number($("#page_no").val());
+	cur_page_no = cur_page_no - 1;
+	$("#page_no").val(cur_page_no);
+	doSearch(); 
+});
 
-                            var length = data.list.length;
-                            if (length > 0) {
+function doSearch() {
+    var request = {
+        brand: $("#brand").val(),
+        province: $("#province").val(),
+        city: $("#city").val(),
+        appsku: $("#appsku").val(),
+        channel: $("#channel").val(),
+        zt: $("#zt").val(),
+        key: $("#key").val(),
+        start_time: $("#start_time").val(),
+        end_time: $("#end_time").val(),
+        page_type: $("#pageype").val(),
+        page_size:$("#page_size").val(),
+        page_no:$("#page_no").val()
+    };
 
-                                $.each(data.list, function(index,
-                                    item) {
-                                    var line = "<tr>" + "<td>" + item.id + "</td>" + "<td>" + item.name + "</td>" + "<td>" + item.phone + "</td>" + "<td>" + item.province + " " + item.city + "</td>" + "<td>" + item.brand + "</td>" + "<td>" + item.carName + "</td>" + "<td>" + item.serialName + "</td>" + "<td>" + item.dealer + "</td>" + "<td>" + item.appsku + "</td>" + "<td>" + item.channel + "</td>" + "<td>" + item.zt + "</td>" + "<td>&nbsp;</td>" + "<td>" + item.pagetype + "</td>" + "<td>" + item.requestTime + "</td>" + "</tr>";
-                                    $("#request_list_tbl").append(
-                                        line);
-                                });
+    $
+        .ajax({
+            url: "api/car/search",
+            type: "POST",
+            dataType: "json",
+            data: JSON.stringify(request),
+            contentType: 'application/json',
+            success: function(data) {
 
-                            } else {
-                                $("#request_list_tbl").append(
-                                    emptyLine);
-                            }
+                var emptyLine = "<tr><td id=\"no_record\" style=\"display:true\" colspan=\"14\" align=\"center\">NO RECORD FOUND</td></tr>";
+
+                if (data == "") {
+                	$("#page_info").attr("style", "display:none");
+                    $("#no_record").remove();
+                    $("#request_list_tbl").remove();
+                    $("#request_list")
+                        .append(
+                            "<tbody id = \"request_list_tbl\"></tbody>")
+                    $("#request_list_tbl")
+                        .append(emptyLine);
+                } else {
+                    $("#no_record").remove();
+                    $("#request_list_tbl").remove();
+                    $("#request_list")
+                        .append(
+                            "<tbody id = \"request_list_tbl\"></tbody>")
+
+                    var length = data.list.length;
+                    if (length > 0) {
+
+                        $.each(data.list, function(index,
+                            item) {
+                            var line = "<tr>" + "<td>" + item.id + "</td>" + "<td>" + item.name + "</td>" + "<td>" + item.phone + "</td>" + "<td>" + item.province + " " + item.city + "</td>" + "<td>" + item.brand + "</td>" + "<td>" + item.carName + "</td>" + "<td>" + item.serialName + "</td>" + "<td>" + item.dealer + "</td>" + "<td>" + item.appsku + "</td>" + "<td>" + item.channel + "</td>" + "<td>" + item.zt + "</td>" + "<td>&nbsp;</td>" + "<td>" + item.pagetype + "</td>" + "<td>" + item.requestTime + "</td>" + "</tr>";
+                            $("#request_list_tbl").append(
+                                line);
+                        });
+                        
+                        $("#page_info").attr("style", "display:true");
+                        $("#total_cnt").text("共 "　+ data.record_count + " 条");
+                        $("#client_cnt").text("名单总人数： "+data.group_count+" 人");
+                        if(data.total_page == 1)
+                        {
+                        	$("#page_no").val(1);
+                        	$("#paging").attr("style", "display:true");
+                        	$("#page_go").attr("style", "display:none");
+                        	$("#prep").attr("style", "display:none");
+                    		$("#firstp").attr("style", "display:none");
+                    		$("#lastp").attr("style", "display:none");
+                    		$("#nextp").attr("style", "display:none");
+                        	$("#lb_summary").empty();
+                        	$("#lb_summary").append("共&nbsp;"+ data.total_page +"&nbsp;页&nbsp;第&nbsp;"+ data.page_no + "&nbsp;页");
+                        	$("#lb_pgsize").attr("style", "display:true");
                         }
+                        else
+                        {
+                        	$("#page_go").attr("style", "display:true");
+                        	$("#paging").attr("style", "display:true");
+                        	$("#page_no").val(data.page_no);
+//                        	$("#paging").append("<a href=\"javascript:void(0);\" id=\"firstp\">首页</a>&nbsp;&nbsp;&nbsp;<a href=\"javascript:void(0);\" id=\"pre\">上页</a>");
+                        	if (data.page_no == 1)
+                        	{
+                        		$("#prep").attr("style", "display:none");
+                        		$("#firstp").attr("style", "display:none");
+                        		$("#lastp").attr("style", "display:true");
+                        		$("#nextp").attr("style", "display:true");
+                        		
+                        	}
+                        	
+//                        	$("#paging").append("<a href=\"javascript:void(0);\" id=\"next\">下页</a>&nbsp;&nbsp;&nbsp;<a href=\"javascript:void(0);\" id=\"lastp\">末页</a>");
+                        	if (data.page_no == data.total_page)
+                        	{
+                        		$("#prep").attr("style", "display:true");
+                        		$("#firstp").attr("style", "display:true");
+                        		$("#lastp").attr("style", "display:none");
+                        		$("#nextp").attr("style", "display:none");
+                        	}
+                        	
+                        	$("#lb_summary").empty();
+                        	$("#lb_summary").append("共&nbsp;"+ data.total_page +"&nbsp;页&nbsp;第&nbsp;"+ data.page_no + "&nbsp;页");
+                        	$("#lb_pgsize").attr("style", "display:true");
+                        }
+                        
+
+                    } else {
+                    	$("#page_info").attr("style", "display:none");
+                        $("#request_list_tbl").append(
+                            emptyLine);
                     }
-                });
-
+                }
+            }
         });
-
+}
 // 根据车型id和城市获取经销商
 
 function showTip(text) {
@@ -274,3 +347,6 @@ $("#add_mail").click(
         loadMailList();
     }
 );
+
+//$("#page_size").on( "change", function() { doSearch(); } );
+

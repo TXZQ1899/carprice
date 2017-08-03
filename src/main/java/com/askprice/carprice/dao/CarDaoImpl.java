@@ -63,11 +63,11 @@ public class CarDaoImpl extends CommonDao implements CarDao  {
 
 	@Override
 	public PaginationData<AskPriceRecord> getAskpriceRequest(SearchRequest request) {
-		ListPage<AskPriceRecord> listPage = new ListPage<>(request.getPageSize(), request.getPageNo());
+		ListPage<AskPriceRecord> listPage = new ListPage<>(request.getPage_size(), request.getPage_no());
 		String sql = getSQLBySearchRequest(request, false);
 		String countSql = getSQLBySearchRequest(request, true);
 		listBySqlDto(listPage, countSql, sql, AskPriceRecord.class);
-		return buildPagination(request.getPageSize(), request.getPageNo(), listPage );
+		return buildPagination(request.getPage_size(), request.getPage_no(), listPage );
 	}
 	
 	@SuppressWarnings("unchecked")

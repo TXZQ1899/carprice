@@ -110,9 +110,37 @@
 				<tr>
 					<td id="no_record" style="display:true" colspan="14" align="center">NO RECORD FOUND</td>
 				</tr>
-				
 			</tbody>
 		</table>
+		<div class="row" id="page_info" style="display:none">
+			<div class="col-md-4" >
+				<label id="total_cnt">共163条</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label id="client_cnt">名单总人数：78人</label> 
+			</div>	
+						
+			<div class="col-md-8 text-right" id="navigator">
+				<label id = "page_go" class="form-inline" style="display:none">
+					<input type="text" id="go_to_page" maxlength=3 style="width:30px;height:20px;text-align:center">&nbsp;&nbsp;
+					<input type="button" class="btn btn-primary btn-sm" id="go_to" value = "跳转">
+				</label>
+				&nbsp;&nbsp;
+				<label id = "paging" style="display:none">
+				<input type="button" class="btn btn-primary btn-sm" id="firstp" value = "首页" style="display:none">
+				<input type="button" class="btn btn-primary btn-sm" id="prep" value = "上页" style="display:none">
+				<input type="button" class="btn btn-primary btn-sm" id="nextp" value = "下页" style="display:none">
+				<input type="button" class="btn btn-primary btn-sm" id="lastp" value = "末页" style="display:none">
+				</label>
+				<label id = "lb_summary"></label>
+				<label id = "lb_pgsize" style="display:none">
+					<select class="form-control" id="page_size">
+						<option value="1">1</option>
+						<option selected value="15">15</option>
+						<option value="50">50</option>
+					</select>
+				</label>
+				<label id="lb_pgno" style="display:none"><input type="hidden" id="page_no" value="1"></label>
+			</div>
+		</div>
+		
 	</div>
 
 	<!-- Bootstrap core JavaScript
@@ -130,7 +158,6 @@
 			$( "#start_time" ).datepicker();    
 			$( "#end_time" ).datepicker(); 
 			initQueryPage();
-			
 		});
   </script>
 
