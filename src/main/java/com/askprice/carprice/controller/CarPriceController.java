@@ -211,6 +211,9 @@ public class CarPriceController {
 		searchRequest.setStart_time(start_time);
 		searchRequest.setEnd_time(end_time);
 		String filePath = carService.ExportRecord(searchRequest);
+		
+		if (filePath.equals("")) return;
+		
 		chooseFileType(request, response,"询价导出记录","excel_xls");
 		
 		OutputStream os = response.getOutputStream();

@@ -201,6 +201,7 @@ function doSearch() {
                 var emptyLine = "<tr><td id=\"no_record\" style=\"display:true\" colspan=\"14\" align=\"center\">NO RECORD FOUND</td></tr>";
 
                 if (data == "") {
+                	$("#r_export").attr("disabled", "disabled");
                 	$("#page_info").attr("style", "display:none");
                     $("#no_record").remove();
                     $("#request_list_tbl").remove();
@@ -225,7 +226,7 @@ function doSearch() {
                             $("#request_list_tbl").append(
                                 line);
                         });
-                        
+                        $("#r_export").removeAttr("disabled");
                         $("#page_info").attr("style", "display:true");
                         $("#total_cnt").text("共 "　+ data.record_count + " 条");
                         $("#client_cnt").text("名单总人数： "+data.group_count+" 人");

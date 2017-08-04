@@ -253,6 +253,8 @@ public class CarPriceServiceImpl implements CarPriceService {
 		List<AskPriceRecord> list = new ArrayList<AskPriceRecord>();
 		
 		list = carDao.getAskpriceRequestList(request);
+		
+		if (list == null || list.size() == 0) return "";
         
         Map<String, String> map = new HashMap<String, String>();
         map.put("title", "汽车询价记录表");
