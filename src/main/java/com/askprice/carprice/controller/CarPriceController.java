@@ -1,11 +1,20 @@
 package com.askprice.carprice.controller;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.apache.poi.util.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -191,6 +200,57 @@ public class CarPriceController {
 		}
 		
 		return carService.getAskPriceRecord(request);
+	}
+	
+	@RequestMapping(value = { "/export/shortcut" }, method = {RequestMethod.POST, RequestMethod.GET})
+	public @ResponseBody void exportRecord(@RequestParam(value = "start_time", required = false) String start_time,
+			@RequestParam(value = "end_time", required = false) String end_time, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		
+		SearchRequest searchRequest = new SearchRequest();
+		searchRequest.setStart_time(start_time);
+		searchRequest.setEnd_time(end_time);
+		String filePath = carService.ExportRecord(searchRequest);
+		chooseFileType(request, response,"询价导出记录","excel_xls");
+		
+		OutputStream os = response.getOutputStream();
+		IOUtils.copy(new FileInputStream(new File(filePath)), os);
+//		ByteArrayOutputStream outPut = new ByteArrayOutputStream();
+		os.flush();
+		os.close();
+		
+	}
+	
+	protected void chooseFileType(HttpServletRequest request,	HttpServletResponse response,String fileName,String fileType) {
+        if("pdf".equalsIgnoreCase(fileType)){
+        	setFileDownloadHeader(response,fileName,".pdf");
+            response.setContentType("application/pdf");
+        }else if("excel_xlsx".equalsIgnoreCase(fileType)){
+        	setFileDownloadHeader(response,fileName,".xlsx");
+            response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        }else if("excel_xls".equalsIgnoreCase(fileType)){
+        	setFileDownloadHeader(response,fileName,".xls");
+            response.setContentType("application/vnd.ms-excel");
+        }else{
+        	setFileDownloadHeader(response,fileName,".xls");
+            response.setContentType("application/vnd.ms-excel");
+        }
+    }
+	
+	public static void setFileDownloadHeader(HttpServletResponse response, String filename, String fileSuffix) {
+		String headerValue = "attachment;";
+		headerValue += " filename=\"" + encodeURIComponent(filename) + fileSuffix + "\";";
+		headerValue += " filename*=utf-8''" + encodeURIComponent(filename) + fileSuffix;
+		response.setHeader("Content-Disposition", headerValue);
+	}
+	
+	public static String encodeURIComponent(String value) {
+		try {
+			return URLEncoder.encode(value, "UTF-8").replaceAll("\\+", "%20");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 	@RequestMapping(value = { "/export" }, method = RequestMethod.GET)

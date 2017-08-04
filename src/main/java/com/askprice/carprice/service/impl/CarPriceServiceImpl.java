@@ -249,6 +249,25 @@ public class CarPriceServiceImpl implements CarPriceService {
 	}
 
 	@Override
+	public String ExportRecord(SearchRequest request) throws Exception {
+		List<AskPriceRecord> list = new ArrayList<AskPriceRecord>();
+		
+		list = carDao.getAskpriceRequestList(request);
+        
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("title", "汽车询价记录表");
+        map.put("total", list.size()+" 条");
+        map.put("date", EmailTools.getDateBefore(0));
+        
+        String output_file = fileName + "_" + request.getStart_time() + "_" + request.getEnd_time() + ".xls";
+
+        ExcelUtil.getInstance().exportObj2ExcelByTemplate(map, "ask_price_request_template.xls", new FileOutputStream(folder + output_file),
+                list, AskPriceRecord.class, true);
+        
+        return folder + output_file;
+	}
+	
+	@Override
 	public void ExportRecord() throws Exception {
 		List<AskPriceRecord> list = new ArrayList<AskPriceRecord>();
 		

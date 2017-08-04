@@ -9,15 +9,12 @@
 <!-- Bootstrap core CSS -->
 <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<link href="css/mricode.pagination.css" rel="stylesheet" />
-<!-- <link href="css/jquery-ui.css" rel="stylesheet"> -->
 </head>
 <body>
 
 
 	<div class="container">
 		<h1 class="page-header">查询条件</h1>
-
 		<div class="form-inline" style="width: 100%">
 			<div class="form-group">
 			<label for="speed">品&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;牌:</label>
@@ -72,21 +69,8 @@
 				<input type="button"
 					class="form-control" id="submit" value = "查询">
 			</div>
-
-
 		</div>
 		<div style="height: 10px"></div>
-<!-- 		<div class="form-inline"> -->
-<!-- 			<div class="form-group"> -->
-<!-- 				<label for="keyword">关&nbsp;键&nbsp;字:</label> <input type="text" -->
-<!-- 					class="form-control" id="keyword"> -->
-<!-- 			</div> -->
-<!-- 			&nbsp;&nbsp;&nbsp; -->
-<!-- 			<div class="form-group"> -->
-<!-- 				<input type="button" -->
-<!-- 					class="form-control" id="submit" value = "查询"> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
 		<h5 class="page-header"></h5>
 		<div class="form-group">
 			<input type="button" class="btn btn-primary btn-sm" id="r_jt" value = "今天" >
@@ -96,6 +80,7 @@
 			<input type="button" class="btn btn-primary btn-sm" id="r_sy" value = "上月" >
 			<input type="button" class="btn btn-primary btn-sm" id="r_yz" value = "最近7天" >
 			<input type="button" class="btn btn-primary btn-sm" id="r_yy" value = "最近30天" >
+			<input type="button" class="btn btn-primary btn-sm" id="r_export" value = "导出excel" >
 		</div>
 		<table class="table table-hover" id = "request_list" style="margin-top:5px">
 			<thead>
@@ -124,7 +109,7 @@
 		</table>
 		<div class="row" id="page_info" style="display:none">
 			<div class="col-md-4" >
-				<label id="total_cnt">共163条</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label id="client_cnt">名单总人数：78人</label> 
+				<label id="total_cnt">共 X 条</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label id="client_cnt">名单总人数：X 人</label> 
 			</div>	
 						
 			<div class="col-md-8 text-right" id="navigator">

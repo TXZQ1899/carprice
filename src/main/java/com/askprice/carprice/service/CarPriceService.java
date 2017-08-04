@@ -32,6 +32,8 @@ public interface CarPriceService {
 	
 	public void ExportRecord() throws Exception;
 	
+	public String ExportRecord(SearchRequest request) throws Exception;
+	
 	public String getSmsSwitchValue();
 	
 	public void updateSmsSwitchValue(String value);
