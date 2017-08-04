@@ -145,7 +145,7 @@ public class CarDaoImpl extends CommonDao implements CarDao  {
 			sql = sql + " AND r.zt = '" + request.getZt() + "'";
 		}
 		
-		sql = sql + " order by requestTime desc";
+		sql = sql + " order by requestTime desc, r.id desc";
 		
 		if (forCount) 
 		{

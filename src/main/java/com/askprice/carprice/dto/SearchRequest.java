@@ -25,7 +25,23 @@ public class SearchRequest {
 	
 	private Integer page_no;
 	
-	
+	public SearchRequest(){}
+
+	public SearchRequest(String brand, String province, String city, String appsku, String channel, String zt,
+			String start_time, String end_time, String page_type, Integer page_size, Integer page_no) {
+		super();
+		this.brand = brand;
+		this.province = province;
+		this.city = city;
+		this.appsku = appsku;
+		this.channel = channel;
+		this.zt = zt;
+		this.start_time = start_time;
+		this.end_time = end_time;
+		this.page_type = page_type;
+		this.page_size = page_size;
+		this.page_no = page_no;
+	}
 
 	public String getBrand() {
 		return brand;

@@ -159,8 +159,26 @@ public class CarPriceController {
 		return initResult("您的询价请求已经成功提交!");
 	}
 	
-	@RequestMapping(value = { "/search" }, method = RequestMethod.POST)
-	public @ResponseBody PaginationData<AskPriceRecord> search(@RequestBody SearchRequest request) throws Exception {
+	@RequestMapping(value = { "/search" }, method = {RequestMethod.POST, RequestMethod.GET})
+	public @ResponseBody PaginationData<AskPriceRecord> search(@RequestBody(required = false) SearchRequest request,
+			@RequestParam(value = "brand", required = false) String brand,
+			@RequestParam(value = "start_time", required = false) String start_time,
+			@RequestParam(value = "end_time", required = false) String end_time,
+			@RequestParam(value = "province", required = false) String province,
+			@RequestParam(value = "city", required = false) String city,
+			@RequestParam(value = "page_size", required = false) Integer page_size,
+			@RequestParam(value = "pagetype", required = false) String page_type,
+			@RequestParam(value = "page_no", required = false) Integer page_no,
+			@RequestParam(value = "appsku", required = false) String appsku,
+			@RequestParam(value = "zt", required = false) String zt,
+			@RequestParam(value = "pagetype", required = false) String pagetype,
+			@RequestParam(value = "channel", required = false) String channel) throws Exception {
+		
+		if (request==null)
+		{
+			request = new SearchRequest(brand, province, city, appsku, channel, zt,
+					start_time, end_time, page_type, page_size, page_no);
+		}
 		
 		if(request.getPage_size() == null) 
 		{

@@ -9,6 +9,7 @@
 <!-- Bootstrap core CSS -->
 <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link href="css/mricode.pagination.css" rel="stylesheet" />
 <!-- <link href="css/jquery-ui.css" rel="stylesheet"> -->
 </head>
 <body>
@@ -112,6 +113,8 @@
 				</tr>
 			</tbody>
 		</table>
+		<div id="page" class="m-pagination"></div>
+    	<div id="eventLog"></div>
 		<div class="row" id="page_info" style="display:none">
 			<div class="col-md-4" >
 				<label id="total_cnt">共163条</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label id="client_cnt">名单总人数：78人</label> 
@@ -137,7 +140,7 @@
 						<option value="50">50</option>
 					</select>
 				</label>
-				<label id="lb_pgno" style="display:none"><input type="hidden" id="page_no" value="1"></label>
+				<label id="lb_pgno" style="display:none"><input type="hidden" id="page_no" value="1"><input type="hidden" id="total_page" value="1"></label>
 			</div>
 		</div>
 		
@@ -159,6 +162,7 @@
 			$( "#end_time" ).datepicker(); 
 			initQueryPage();
 		});
+	  
   </script>
 
 </body>

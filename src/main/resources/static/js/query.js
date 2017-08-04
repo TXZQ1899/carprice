@@ -17,6 +17,35 @@ $("#nextp")
 	doSearch(); 
 });
 
+$("#lastp")
+.click(function() { 
+	$("#page_no").val($("#total_page").val());
+	doSearch(); 
+});
+
+
+
+$("#go_to")
+.click(function() {
+	var g = Number($("#go_to_page").val());
+	var t = Number($("#total_page").val());
+	
+	if (g > 0 && g <= t)
+	{
+		$("#page_no").val(g);
+		doSearch(); 
+	}
+	
+	$("#go_to_page").val("");
+	
+});
+
+$("#firstp")
+.click(function() { 
+	$("#page_no").val(1);
+	doSearch(); 
+});
+
 $("#prep")
 .click(function() { 
 	var cur_page_no = Number($("#page_no").val());
@@ -81,6 +110,7 @@ function doSearch() {
                         $("#page_info").attr("style", "display:true");
                         $("#total_cnt").text("共 "　+ data.record_count + " 条");
                         $("#client_cnt").text("名单总人数： "+data.group_count+" 人");
+                        $("#total_page").val(data.total_page);
                         if(data.total_page == 1)
                         {
                         	$("#page_no").val(1);
@@ -99,23 +129,27 @@ function doSearch() {
                         	$("#page_go").attr("style", "display:true");
                         	$("#paging").attr("style", "display:true");
                         	$("#page_no").val(data.page_no);
-//                        	$("#paging").append("<a href=\"javascript:void(0);\" id=\"firstp\">首页</a>&nbsp;&nbsp;&nbsp;<a href=\"javascript:void(0);\" id=\"pre\">上页</a>");
                         	if (data.page_no == 1)
                         	{
                         		$("#prep").attr("style", "display:none");
                         		$("#firstp").attr("style", "display:none");
-                        		$("#lastp").attr("style", "display:true");
-                        		$("#nextp").attr("style", "display:true");
                         		
                         	}
-                        	
-//                        	$("#paging").append("<a href=\"javascript:void(0);\" id=\"next\">下页</a>&nbsp;&nbsp;&nbsp;<a href=\"javascript:void(0);\" id=\"lastp\">末页</a>");
-                        	if (data.page_no == data.total_page)
+                        	else
                         	{
                         		$("#prep").attr("style", "display:true");
                         		$("#firstp").attr("style", "display:true");
+                        	}
+                        	
+                        	if (data.page_no == data.total_page)
+                        	{
                         		$("#lastp").attr("style", "display:none");
                         		$("#nextp").attr("style", "display:none");
+                        	}
+                        	else
+                        	{
+                        		$("#lastp").attr("style", "display:true");
+                        		$("#nextp").attr("style", "display:true");
                         	}
                         	
                         	$("#lb_summary").empty();
