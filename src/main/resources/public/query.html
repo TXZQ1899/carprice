@@ -88,7 +88,16 @@
 <!-- 			</div> -->
 <!-- 		</div> -->
 		<h5 class="page-header"></h5>
-		<table class="table table-hover" id = "request_list">
+		<div class="form-group">
+			<input type="button" class="btn btn-primary btn-sm" id="r_jt" value = "今天" >
+			<input type="button" class="btn btn-primary btn-sm" id="r_zt" value = "昨天" >
+			<input type="button" class="btn btn-primary btn-sm" id="r_bz" value = "本周" >
+			<input type="button" class="btn btn-primary btn-sm" id="r_sz" value = "上周" >
+			<input type="button" class="btn btn-primary btn-sm" id="r_sy" value = "上月" >
+			<input type="button" class="btn btn-primary btn-sm" id="r_yz" value = "最近7天" >
+			<input type="button" class="btn btn-primary btn-sm" id="r_yy" value = "最近30天" >
+		</div>
+		<table class="table table-hover" id = "request_list" style="margin-top:5px">
 			<thead>
 				<tr>
 					<th>编号</th>
@@ -96,8 +105,8 @@
 					<th>手机号</th>
 					<th>城市</th>
 					<th>品牌</th>
-					<th>汽车车款</th>
 					<th>车型</th>
+					<th>汽车车款</th>
 					<th>经销商</th>
 					<th>数据来源</th>
 					<th>渠道</th>
@@ -113,8 +122,6 @@
 				</tr>
 			</tbody>
 		</table>
-		<div id="page" class="m-pagination"></div>
-    	<div id="eventLog"></div>
 		<div class="row" id="page_info" style="display:none">
 			<div class="col-md-4" >
 				<label id="total_cnt">共163条</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label id="client_cnt">名单总人数：78人</label> 
@@ -127,7 +134,7 @@
 				</label>
 				&nbsp;&nbsp;
 				<label id = "paging" style="display:none">
-				<input type="button" class="btn btn-primary btn-sm" id="firstp" value = "首页" style="display:none">
+				<input type="button" class="btn btn-primary btn-sm" id="firstp" value = "首页" style="display:none" disabled>
 				<input type="button" class="btn btn-primary btn-sm" id="prep" value = "上页" style="display:none">
 				<input type="button" class="btn btn-primary btn-sm" id="nextp" value = "下页" style="display:none">
 				<input type="button" class="btn btn-primary btn-sm" id="lastp" value = "末页" style="display:none">
@@ -151,6 +158,7 @@
 	<!-- Placed at the end of the document so the pages load faster -->
 	<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
 	<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="js/date-calc.js"></script>
 	<script src="js/distpicker.data.js"></script>
 	<script src="js/distpicker.js"></script>
 	<script src="js/jquery-ui.js"></script>

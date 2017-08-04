@@ -3,6 +3,101 @@ $("#submit")
         doSearch();
     });
 
+//<input type="button" class="btn btn-primary btn-sm" id="r_jt" value = "今天" disabled="disabled">
+//<input type="button" class="btn btn-primary btn-sm" id="r_zt" value = "昨天" >
+//<input type="button" class="btn btn-primary btn-sm" id="r_bz" value = "本周" >
+//<input type="button" class="btn btn-primary btn-sm" id="r_sz" value = "上周" >
+//<input type="button" class="btn btn-primary btn-sm" id="r_sy" value = "上月" >
+//<input type="button" class="btn btn-primary btn-sm" id="r_yz" value = "最近7天" >
+//<input type="button" class="btn btn-primary btn-sm" id="r_yy" value = "最近30天" >
+
+function resetSearchCondition()
+{
+	$("#brand").val("");
+	$("#zt").val("");
+	$("#channel").val("");
+	$("#appsku").val("");
+	$("#pagetype").val("");
+	$("#province").val("");
+	$("#city").val("");
+}
+
+$("#r_jt")
+.click(function() { 
+	resetSearchCondition();
+	start_time = getCurrentDate;
+	end_time = getCurrentDate;
+//	$("#brand").val("");
+//	$("#brand").attr("value",""); 
+//	$("#brand option[text='请选择']").attr("selected",true);
+	$("#start_time").val(start_time);
+	$("#end_time").val(end_time);
+	
+	doSearch(); 
+});
+
+
+
+$("#r_zt")
+.click(function() { 
+	resetSearchCondition();
+	time = getYesterdayDate;
+	$("#start_time").val(time);
+	$("#end_time").val(time);
+	doSearch(); 
+});
+
+$("#r_bz")
+.click(function() { 
+	resetSearchCondition();
+	start_time = getWeekStartDate;
+	end_time = getCurrentDate;
+	$("#start_time").val(start_time);
+	$("#end_time").val(end_time);
+	doSearch(); 
+});
+
+$("#r_sz")
+.click(function() { 
+	resetSearchCondition();
+	start_time = getUpWeekStartDate;
+	end_time = getUpWeekEndDate;
+	$("#start_time").val(start_time);
+	$("#end_time").val(end_time);
+	doSearch(); 
+});
+
+$("#r_sy")
+.click(function() { 
+	resetSearchCondition();
+	start_time = getLastMonthStartDate;
+	end_time = getLastMonthEndDate;
+	$("#start_time").val(start_time);
+	$("#end_time").val(end_time);
+	doSearch(); 
+});
+
+$("#r_yz")
+.click(function() { 
+	resetSearchCondition();
+	start_time = GetDateStr(-6);
+	end_time = getCurrentDate;
+	$("#start_time").val(start_time);
+	$("#end_time").val(end_time);
+	doSearch(); 
+});
+
+$("#r_yy")
+.click(function() { 
+	resetSearchCondition();
+	start_time = GetDateStr(-30);
+	end_time = getCurrentDate;
+	$("#start_time").val(start_time);
+	$("#end_time").val(end_time);
+	doSearch(); 
+});
+
+
 $("#page_size")
 	.change(function() { 
 		$("#page_no").val(1);
@@ -102,7 +197,7 @@ function doSearch() {
 
                         $.each(data.list, function(index,
                             item) {
-                            var line = "<tr>" + "<td>" + item.id + "</td>" + "<td>" + item.name + "</td>" + "<td>" + item.phone + "</td>" + "<td>" + item.province + " " + item.city + "</td>" + "<td>" + item.brand + "</td>" + "<td>" + item.carName + "</td>" + "<td>" + item.serialName + "</td>" + "<td>" + item.dealer + "</td>" + "<td>" + item.appsku + "</td>" + "<td>" + item.channel + "</td>" + "<td>" + item.zt + "</td>" + "<td>&nbsp;</td>" + "<td>" + item.pagetype + "</td>" + "<td>" + item.requestTime + "</td>" + "</tr>";
+                            var line = "<tr>" + "<td>" + item.id + "</td>" + "<td>" + item.name + "</td>" + "<td>" + item.phone + "</td>" + "<td>" + item.province + " " + item.city + "</td>" + "<td>" + item.brand + "</td>" + "<td>" + item.serialName + "</td>" + "<td>" + item.carName + "</td>" + "<td>" + item.dealer + "</td>" + "<td>" + item.appsku + "</td>" + "<td>" + item.channel + "</td>" + "<td>" + item.zt + "</td>" + "<td>&nbsp;</td>" + "<td>" + item.pagetype + "</td>" + "<td>" + item.requestTime + "</td>" + "</tr>";
                             $("#request_list_tbl").append(
                                 line);
                         });
@@ -231,7 +326,7 @@ function initQueryPage() {
         data: "",
         success: function(data) {
         	$("#brand").empty();
-        	$("#brand").append("<option disabled selected>请选择</option>");
+        	$("#brand").append("<option selected value=''>请选择</option>");
             var length = data.length;
             if (length > 0) {
                 $.each(data, function(index,
@@ -250,7 +345,7 @@ function initQueryPage() {
         data: "",
         success: function(data) {
         	$("#zt").empty();
-        	$("#zt").append("<option disabled selected>请选择</option>");
+        	$("#zt").append("<option disabled selected value=''>请选择</option>");
             var length = data.length;
             if (length > 0) {
                 $.each(data, function(index,
@@ -269,7 +364,7 @@ function initQueryPage() {
         data: "",
         success: function(data) {
         	$("#pagetype").empty();
-        	$("#pagetype").append("<option disabled selected>请选择</option>");
+        	$("#pagetype").append("<option disabled selected value=''>请选择</option>");
             var length = data.length;
             if (length > 0) {
                 $.each(data, function(index,
@@ -288,7 +383,7 @@ function initQueryPage() {
         data: "",
         success: function(data) {
         	$("#appsku").empty();
-        	$("#appsku").append("<option disabled selected>请选择</option>");
+        	$("#appsku").append("<option disabled selected value=''>请选择</option>");
             var length = data.length;
             if (length > 0) {
                 $.each(data, function(index,
@@ -307,7 +402,7 @@ function initQueryPage() {
         data: "",
         success: function(data) {
         	$("#channel").empty();
-        	$("#channel").append("<option disabled selected>请选择</option>");
+        	$("#channel").append("<option disabled selected value=''>请选择</option>");
             var length = data.length;
             if (length > 0) {
                 $.each(data, function(index,
