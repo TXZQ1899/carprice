@@ -141,6 +141,7 @@
 				else
 				{
 					showTip(data.message);
+					location.href ="succ.html";
 				}
 			}
 		});

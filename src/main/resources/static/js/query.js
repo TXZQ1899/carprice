@@ -351,8 +351,9 @@ function initQueryPage() {
         success: function(data) {
         	$("#brand").empty();
         	$("#brand").append("<option selected value=''>请选择</option>");
-            var length = data.length;
-            if (length > 0) {
+        	
+            
+            if (data != null && data.length > 0) {
                 $.each(data, function(index,
                     item) {
                 		var opt = "<option value='" + item + "'>" + item + "</option>"
@@ -370,8 +371,7 @@ function initQueryPage() {
         success: function(data) {
         	$("#zt").empty();
         	$("#zt").append("<option disabled selected value=''>请选择</option>");
-            var length = data.length;
-            if (length > 0) {
+            if (data != null && data.length > 0) {
                 $.each(data, function(index,
                     item) {
                 		var opt = "<option value='" + item + "'>" + item + "</option>"
@@ -389,8 +389,7 @@ function initQueryPage() {
         success: function(data) {
         	$("#pagetype").empty();
         	$("#pagetype").append("<option disabled selected value=''>请选择</option>");
-            var length = data.length;
-            if (length > 0) {
+            if (data != null && data.length > 0) {
                 $.each(data, function(index,
                     item) {
                 		var opt = "<option value='" + item + "'>" + item + "</option>"
@@ -408,8 +407,7 @@ function initQueryPage() {
         success: function(data) {
         	$("#appsku").empty();
         	$("#appsku").append("<option disabled selected value=''>请选择</option>");
-            var length = data.length;
-            if (length > 0) {
+            if (data != null && data.length > 0) {
                 $.each(data, function(index,
                     item) {
                 		var opt = "<option value='" + item + "'>" + item + "</option>"
@@ -427,8 +425,7 @@ function initQueryPage() {
         success: function(data) {
         	$("#channel").empty();
         	$("#channel").append("<option disabled selected value=''>请选择</option>");
-            var length = data.length;
-            if (length > 0) {
+            if (data != null && data.length > 0) {
                 $.each(data, function(index,
                     item) {
                 		var opt = "<option value='" + item + "'>" + item + "</option>"
