@@ -67,13 +67,12 @@ $("#r_sz")
 	doSearch(); 
 });
 
-r_export
 $("#r_export")
 .click(function() {
 	start_time = $("#start_time").val();
 	end_time = $("#end_time").val();
 	params = 'start_time=' + start_time + '&end_time=' + end_time;
-	$.download('api/car/export/shortcut',params, 'post');
+	$.download('localhost:9527/api/car/export/shortcut',params, 'post');
 });
 
 $("#r_sy")
@@ -191,7 +190,7 @@ function doSearch() {
     };
 
     $.ajax({
-            url: "api/car/search",
+            url: "localhost:9527/api/car/search",
             type: "POST",
             dataType: "json",
             data: JSON.stringify(request),
@@ -301,7 +300,7 @@ function showSuccess() {
 
 function loadSMSConfig() {
     $.ajax({
-        url: "api/car/config/sms",
+        url: "localhost:9527/api/car/config/sms",
         type: "GET",
         dataType: "text",
         data: "",
@@ -318,7 +317,7 @@ function loadSMSConfig() {
 
 function loadMailList() {
     $.ajax({
-        url: "api/car/config/maillist",
+        url: "localhost:9527/api/car/config/maillist",
         type: "GET",
         dataType: "json",
         data: "",
@@ -345,7 +344,7 @@ function loadMailList() {
 
 function initQueryPage() {
     $.ajax({
-        url: "api/car/query/brandlist",
+        url: "localhost:9527/api/car/query/brandlist",
         type: "GET",
         dataType: "json",
         data: "",
@@ -365,7 +364,7 @@ function initQueryPage() {
     });
     
     $.ajax({
-        url: "api/car/query/ztlist",
+        url: "localhost:9527/api/car/query/ztlist",
         type: "GET",
         dataType: "json",
         data: "",
@@ -383,7 +382,7 @@ function initQueryPage() {
     });
     
     $.ajax({
-        url: "api/car/query/pagetypelist",
+        url: "localhost:9527/api/car/query/pagetypelist",
         type: "GET",
         dataType: "json",
         data: "",
@@ -401,7 +400,7 @@ function initQueryPage() {
     });
     
     $.ajax({
-        url: "api/car/query/appskulist",
+        url: "localhost:9527/api/car/query/appskulist",
         type: "GET",
         dataType: "json",
         data: "",
@@ -419,7 +418,7 @@ function initQueryPage() {
     });
     
     $.ajax({
-        url: "api/car/query/channellist",
+        url: "localhost:9527/api/car/query/channellist",
         type: "GET",
         dataType: "json",
         data: "",
@@ -441,7 +440,7 @@ $("#save_sms_switch").click(
     function() {
         var value = $("input[name='sms_switch']:checked").val();
         $.ajax({
-            url: "api/car/config/sms",
+            url: "localhost:9527/api/car/config/sms",
             type: "PUT",
             dataType: "text",
             data: {
@@ -464,7 +463,7 @@ $("#delete").click(
         });
         if (cnt > 0) {
             $.ajax({
-                url: "api/car/config/maillist",
+                url: "localhost:9527/api/car/config/maillist",
                 type: "POST",
                 data: {
                     "chk_ids": chk_ids
@@ -482,7 +481,7 @@ $("#add_mail").click(
         var name = $("#name").val();
         var mail = $("#mail").val();
         $.ajax({
-            url: "api/car/config/maillist",
+            url: "localhost:9527/api/car/config/maillist",
             type: "PUT",
             dataType: "text",
             data: {

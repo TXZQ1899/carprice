@@ -36,7 +36,7 @@ $(function() {
             }
         }
         $.ajax({
-            url: "api/car/sms",
+            url: "localhost:9527/api/car/sms",
             type: "GET",
             dataType: "json",
             data: {
