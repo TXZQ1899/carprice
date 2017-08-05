@@ -2,7 +2,7 @@
       function getCarInfo(serialId, carId){
     	  //alert(serialId+" - "+carId);
           $.ajax({
-			  	url:"http://localhost:9527/api/car/carlist",
+			  	url: car_price_service_domain + "api/car/carlist",
 			  	type:"get",
 				dataType:"json",
 				data:{serialid:serialId},
@@ -152,7 +152,7 @@
 	function showGrouponPrice_location(carId,cityCode){
 		//alert(carId+" - "+cityName);
 		$.ajax({
-		  	url:"http://localhost:9527/api/car/cardealerlist",
+		  	url:car_price_service_domain + "api/car/cardealerlist",
 		  	type:"POST",
 			dataType:"json",
 			data:{carid:carId,cityid:cityCode},
@@ -257,7 +257,7 @@
 	
 	function getSmsConfig(){
 		$.ajax({
-	        url: "http://localhost:9527/api/car/config/sms",
+	        url: car_price_service_domain + "api/car/config/sms",
 	        type: "GET",
 	        dataType: "text",
 	        data: "",
@@ -284,7 +284,7 @@
 
   	function getCityByIp(){
 		$.ajax({
-		  	url:"http://localhost:9527/api/car/locatecity",
+		  	url:car_price_service_domain + "api/car/locatecity",
 			type:'get',
 			//async:false,
 			timeout:3500,
