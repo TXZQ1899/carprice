@@ -72,7 +72,7 @@ $("#r_export")
 	start_time = $("#start_time").val();
 	end_time = $("#end_time").val();
 	params = 'start_time=' + start_time + '&end_time=' + end_time;
-	$.download('localhost:9527/api/car/export/shortcut',params, 'post');
+	$.download('http://localhost:9527/api/car/export/shortcut',params, 'post');
 });
 
 $("#r_sy")
@@ -190,7 +190,7 @@ function doSearch() {
     };
 
     $.ajax({
-            url: "localhost:9527/api/car/search",
+            url: car_price_service_domain + "api/car/search",
             type: "POST",
             dataType: "json",
             data: JSON.stringify(request),
@@ -300,7 +300,7 @@ function showSuccess() {
 
 function loadSMSConfig() {
     $.ajax({
-        url: "localhost:9527/api/car/config/sms",
+        url: car_price_service_domain + "api/car/config/sms",
         type: "GET",
         dataType: "text",
         data: "",
@@ -317,7 +317,7 @@ function loadSMSConfig() {
 
 function loadMailList() {
     $.ajax({
-        url: "localhost:9527/api/car/config/maillist",
+        url: car_price_service_domain + "api/car/config/maillist",
         type: "GET",
         dataType: "json",
         data: "",
@@ -344,7 +344,7 @@ function loadMailList() {
 
 function initQueryPage() {
     $.ajax({
-        url: "localhost:9527/api/car/query/brandlist",
+        url: car_price_service_domain + "api/car/query/brandlist",
         type: "GET",
         dataType: "json",
         data: "",
@@ -364,7 +364,7 @@ function initQueryPage() {
     });
     
     $.ajax({
-        url: "localhost:9527/api/car/query/ztlist",
+        url: car_price_service_domain + "api/car/query/ztlist",
         type: "GET",
         dataType: "json",
         data: "",
@@ -382,7 +382,7 @@ function initQueryPage() {
     });
     
     $.ajax({
-        url: "localhost:9527/api/car/query/pagetypelist",
+        url: car_price_service_domain + "api/car/query/pagetypelist",
         type: "GET",
         dataType: "json",
         data: "",
@@ -400,7 +400,7 @@ function initQueryPage() {
     });
     
     $.ajax({
-        url: "localhost:9527/api/car/query/appskulist",
+        url: car_price_service_domain + "api/car/query/appskulist",
         type: "GET",
         dataType: "json",
         data: "",
@@ -418,7 +418,7 @@ function initQueryPage() {
     });
     
     $.ajax({
-        url: "localhost:9527/api/car/query/channellist",
+        url: car_price_service_domain + "api/car/query/channellist",
         type: "GET",
         dataType: "json",
         data: "",
@@ -440,7 +440,7 @@ $("#save_sms_switch").click(
     function() {
         var value = $("input[name='sms_switch']:checked").val();
         $.ajax({
-            url: "localhost:9527/api/car/config/sms",
+            url: car_price_service_domain + "api/car/config/sms",
             type: "PUT",
             dataType: "text",
             data: {
@@ -463,7 +463,7 @@ $("#delete").click(
         });
         if (cnt > 0) {
             $.ajax({
-                url: "localhost:9527/api/car/config/maillist",
+                url: car_price_service_domain + "api/car/config/maillist",
                 type: "POST",
                 data: {
                     "chk_ids": chk_ids
@@ -481,7 +481,7 @@ $("#add_mail").click(
         var name = $("#name").val();
         var mail = $("#mail").val();
         $.ajax({
-            url: "localhost:9527/api/car/config/maillist",
+            url: car_price_service_domain + "api/car/config/maillist",
             type: "PUT",
             dataType: "text",
             data: {

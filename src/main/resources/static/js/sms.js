@@ -36,7 +36,7 @@ $(function() {
             }
         }
         $.ajax({
-            url: "localhost:9527/api/car/sms",
+            url: car_price_service_domain + "api/car/sms",
             type: "GET",
             dataType: "json",
             data: {
