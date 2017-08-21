@@ -485,7 +485,7 @@ body {
 	display: inline-block
 }
 .ask-price .register li input {
-	width:75%; position:absolute; display:inline-block;
+	width:50%; position:absolute; display:inline-block;
 	border: 0;
 	line-height: 30px;
 	vertical-align: 1px;
@@ -765,7 +765,7 @@ body {
 
 /*iphoe6*/
 @media screen and (min-width:321px) and (max-width:375px){
-.ask-price .register li input{width:74%;}
+.ask-price .register li input{width:66%;}
 .newsline{top:2px;}
-.ask-price .register li strong{width:74%; margin-top:17px;}
+.ask-price .register li strong{width:66%; margin-top:17px;}
 }
