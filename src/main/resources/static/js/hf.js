@@ -10,6 +10,7 @@
 					$("#jxs-ul li").remove();
 					$("#title_in_page").text(data[0].brandName + " " + data[0].showName + " 咨询最底价");
 					$("#brand").val(data[0].brandName);
+					$("#brand-name").text(data[0].showName);
 					document.title = data[0].brandName + " " + data[0].showName + " 咨询最底价";
 					var year = data[0].carYear;
 					$.each(data,function(index,item){

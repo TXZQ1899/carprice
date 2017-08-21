@@ -485,7 +485,7 @@ body {
 	display: inline-block
 }
 .ask-price .register li input {
-	width:75%; position:absolute; display:inline-block;
+	width:50%; position:absolute; display:inline-block;
 	border: 0;
 	line-height: 30px;
 	vertical-align: 1px;
