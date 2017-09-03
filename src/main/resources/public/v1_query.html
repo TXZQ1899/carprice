@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<title>汽车询价查询页面</title>
+<!-- Bootstrap core CSS -->
+<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+</head>
+<body>
+
+
+	<div class="container">
+		<h1 class="page-header">查询条件</h1>
+		<div class="form-inline" style="width: 100%">
+			<div class="form-group">
+			<label for="speed">品&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;牌:</label>
+			    <select name="brand" class="form-control" id="brand"></select>
+			</div>
+			&nbsp;&nbsp;&nbsp;&nbsp;
+			<div class="form-group">
+				<label for="zt">主&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;题:</label>
+				<select name="zt" class="form-control" id="zt"></select>
+			</div>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;
+			<div class="form-group">
+				<label for="channel">渠&nbsp;&nbsp;&nbsp;&nbsp;道:</label>
+				<select name="channel" class="form-control" id="channel"></select> 
+			</div>
+			&nbsp;&nbsp;&nbsp;&nbsp;
+			<div class="form-group">
+				<label for="appsku">数据来源:</label> 
+				<select name="appsku" class="form-control" id="appsku"></select> 
+			</div>
+			&nbsp;&nbsp;&nbsp;&nbsp;
+			<div class="form-group">
+				<label for="pagetype">pageType:</label>
+				<select name="pagetype" class="form-control" id="pagetype"></select>  
+			</div>
+
+
+		</div>
+		<div style="height: 10px"></div>
+		<div class="form-inline" style="width: 100%">
+			<div class="form-group">
+				<label for="province_city">省&nbsp;&nbsp;&nbsp;&nbsp;市:</label>
+				<div id="province_city" data-toggle="distpicker" class="form-group">
+					<div class="form-group">
+						<label class="sr-only" for="province">Province</label> <select
+							class="form-control" id="province" style="width: 120px"></select>
+					</div>
+					&nbsp;&nbsp;-&nbsp;&nbsp;
+					<div class="form-group">
+						<label class="sr-only" for="city">City</label> <select
+							class="form-control" id="city" style="width: 120px"></select>
+					</div>
+				</div>
+			</div>
+			&nbsp;&nbsp;&nbsp;&nbsp;
+			<div class="form-group">
+				<label for="req_time">咨询时间:</label> <input type="text" id="start_time" class="form-control" style="width: 120px"> &nbsp;&nbsp;-&nbsp;&nbsp;<input type="text" class="form-control" id="end_time" style="width:120px">
+			</div>
+			&nbsp;&nbsp;&nbsp;&nbsp;
+			<div class="form-group">
+				<input type="button"
+					class="form-control" id="submit" value = "查询">
+			</div>
+		</div>
+		<div style="height: 10px"></div>
+		<h5 class="page-header"></h5>
+		<div class="form-group">
+			<input type="button" class="btn btn-primary btn-sm" id="r_jt" value = "今天" >
+			<input type="button" class="btn btn-primary btn-sm" id="r_zt" value = "昨天" >
+			<input type="button" class="btn btn-primary btn-sm" id="r_bz" value = "本周" >
+			<input type="button" class="btn btn-primary btn-sm" id="r_sz" value = "上周" >
+			<input type="button" class="btn btn-primary btn-sm" id="r_sy" value = "上月" >
+			<input type="button" class="btn btn-primary btn-sm" id="r_yz" value = "最近7天" >
+			<input type="button" class="btn btn-primary btn-sm" id="r_yy" value = "最近30天" >
+			<input type="button" class="btn btn-primary btn-sm" id="r_export" value = "导出excel" disabled="disabled">
+		</div>
+		<table class="table table-hover" id = "request_list" style="margin-top:5px">
+			<thead>
+				<tr>
+					<th>编号</th>
+					<th>姓名</th>
+					<th>手机号</th>
+					<th>城市</th>
+					<th>品牌</th>
+					<th>车型</th>
+					<th>汽车车款</th>
+					<th>经销商</th>
+					<th>数据来源</th>
+					<th>渠道</th>
+					<th>主题</th>
+					<th>关键字</th>
+					<th>pageType</th>
+					<th>日期</th>
+				</tr>
+			</thead>
+			<tbody id = "request_list_tbl">
+				<tr>
+					<td id="no_record" style="display:true" colspan="14" align="center">NO RECORD FOUND</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="row" id="page_info" style="display:none">
+			<div class="col-md-4" >
+				<label id="total_cnt">共 X 条</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label id="client_cnt">名单总人数：X 人</label> 
+			</div>	
+						
+			<div class="col-md-8 text-right" id="navigator">
+				<label id = "page_go" class="form-inline" style="display:none">
+					<input type="text" id="go_to_page" maxlength=3 style="width:30px;height:20px;text-align:center">&nbsp;&nbsp;
+					<input type="button" class="btn btn-primary btn-sm" id="go_to" value = "跳转">
+				</label>
+				&nbsp;&nbsp;
+				<label id = "paging" style="display:none">
+				<input type="button" class="btn btn-primary btn-sm" id="firstp" value = "首页" style="display:none" disabled>
+				<input type="button" class="btn btn-primary btn-sm" id="prep" value = "上页" style="display:none">
+				<input type="button" class="btn btn-primary btn-sm" id="nextp" value = "下页" style="display:none">
+				<input type="button" class="btn btn-primary btn-sm" id="lastp" value = "末页" style="display:none">
+				</label>
+				<label id = "lb_summary"></label>
+				<label id = "lb_pgsize" style="display:none">
+					<select class="form-control" id="page_size">
+						<option value="1">1</option>
+						<option selected value="15">15</option>
+						<option value="50">50</option>
+					</select>
+				</label>
+				<label id="lb_pgno" style="display:none"><input type="hidden" id="page_no" value="1"><input type="hidden" id="total_page" value="1"></label>
+			</div>
+		</div>
+		
+	</div>
+
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+	<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="js/config.js"></script>
+	<script src="js/date-calc.js"></script>
+	<script src="js/distpicker.data.js"></script>
+	<script src="js/distpicker.js"></script>
+	<script src="js/jquery-ui.js"></script>
+	<script src="js/query.js"></script>
+	
+	<script>
+	  $(function() {
+			$( "#start_time" ).datepicker();    
+			$( "#end_time" ).datepicker(); 
+			initQueryPage();
+		});
+	  
+  </script>
+
+</body>
+</html>
