@@ -329,18 +329,10 @@ function loadMailList() {
             $("#mail_tbl").append("<tbody id = \"mail_list\"></tbody>");
             var length = data.length;
             if (length > 0) {
-//            	<tr class="text-c">
-//				<td><input type="checkbox" value="" name=""></td>
-//				<td>1</td>
-//				<td>李先生</td>
-//				<td>mr.li@163.com</td>
-//				
-//				<td class="f-14"><a title="编辑" href="javascript:;" onclick="admin_role_edit('收件人信息','admin-role-add.html','1')" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a> <a title="删除" href="javascript:;" onclick="admin_role_del(this,'1')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
-//			</tr>
                 $.each(data, function(index,
                     item) {
                     var line = "<tr class=\"text-c\">" + "<td><input type=\"checkbox\" name=\"mailid\" value= \"" + item.id + "\" ></td>" + "<td>" + item.id + "</td>"+ "<td>" + item.name + "</td>" + "<td>" + item.mail + "</td>" 
-                    line = line + "<td class=\"f-14\"><a title=\"编辑\" href=\"javascript:;\" onclick=\"admin_role_edit('收件人信息','admin-role-add.html','1')\" style=\"text-decoration:none\"><i class=\"Hui-iconfont\">&#xe6df;</i></a> <a title=\"删除\" href=\"javascript:;\" onclick=\"admin_role_del(this,'1')\" class=\"ml-5\" style=\"text-decoration:none\"><i class=\"Hui-iconfont\">&#xe6e2;</i></a></td>" + "</tr>";
+                    line = line + "<td class=\"f-14\"><a title=\"删除\" href=\"javascript:;\" onclick=\"mail_del(this,'" + item.id +"')\" class=\"ml-5\" style=\"text-decoration:none\"><i class=\"Hui-iconfont\">&#xe6e2;</i></a></td>" + "</tr>";
                     $("#mail_list").append(
                         line);
                 });
@@ -458,7 +450,7 @@ $("#save_sms_switch").click(
                 value: value
             },
             success: function(data) {
-
+            	layer.msg('保存成功！');
             }
         });
     }
@@ -480,41 +472,13 @@ $("#delete").click(
                     "chk_ids": chk_ids
                 },
                 traditional: true,
-                success: function(data) {}
+                success: function(data) {
+                	loadMailList();
+                }
             });
-            loadMailList();
         }
-    }
-);
-
-function cb(data)
-{
-
-}
-
-$("#add_mail").click(
-    function() {
-        var name = $("#name").val();
-        var mail = $("#mail").val();
-        $.ajax({
-        	
-            url: car_price_service_domain + "api/car/config/maillist",
-            type: "PUT",
-            dataType: "text",
-            data: {
-                name: name,
-                mail: mail
-            },
-            success: function(data) {
-
-            }
-        });
-        $("#name").val("");
-        $("#mail").val("");
-        var index = parent.layer.getFrameIndex(window.name);
-        parent.layer.close(index);
-	
-        loadMailList();
+        
+        
     }
 );
 
