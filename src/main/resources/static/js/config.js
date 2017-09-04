@@ -1,1 +1,1 @@
-var car_price_service_domain = "http://localhost:9527/";
+var car_price_service_domain = "http://che.18media.cn:9527/";
