@@ -197,35 +197,32 @@ function doSearch() {
             contentType: 'application/json',
             success: function(data) {
 
-                var emptyLine = "<tr><td id=\"no_record\" style=\"display:true\" colspan=\"14\" align=\"center\">NO RECORD FOUND</td></tr>";
+                var emptyLine = "<tr class=\"text-c\"><td id=\"no_record\" style=\"display:true\" colspan=\"14\" align=\"center\">未找到符合条件的记录</td></tr>";
 
                 if (data == "") {
                 	$("#r_export").attr("disabled", "disabled");
+					$("#r_export").attr("style", "cursor:not-allowed");
                 	$("#page_info").attr("style", "display:none");
                     $("#no_record").remove();
                     $("#request_list_tbl").remove();
-                    $("#request_list")
-                        .append(
-                            "<tbody id = \"request_list_tbl\"></tbody>")
-                    $("#request_list_tbl")
-                        .append(emptyLine);
+                    $("#request_list").append("<tbody id = \"request_list_tbl\"></tbody>")
+                    $("#request_list_tbl").append(emptyLine);
                 } else {
                     $("#no_record").remove();
                     $("#request_list_tbl").remove();
-                    $("#request_list")
-                        .append(
-                            "<tbody id = \"request_list_tbl\"></tbody>")
+                    $("#request_list").append("<tbody id = \"request_list_tbl\"></tbody>")
 
                     var length = data.list.length;
                     if (length > 0) {
 
                         $.each(data.list, function(index,
                             item) {
-                            var line = "<tr>" + "<td>" + item.id + "</td>" + "<td>" + item.name + "</td>" + "<td>" + item.phone + "</td>" + "<td>" + item.province + " " + item.city + "</td>" + "<td>" + item.brand + "</td>" + "<td>" + item.serialName + "</td>" + "<td>" + item.carName + "</td>" + "<td>" + item.dealer + "</td>" + "<td>" + item.appsku + "</td>" + "<td>" + item.channel + "</td>" + "<td>" + item.zt + "</td>" + "<td>&nbsp;</td>" + "<td>" + item.pagetype + "</td>" + "<td>" + item.requestTime + "</td>" + "</tr>";
+                            var line = "<tr class=\"text-c\">" + "<td>" + item.id + "</td>" + "<td>" + item.name + "</td>" + "<td>" + item.phone + "</td>" + "<td>" + item.province + " " + item.city + "</td>" + "<td>" + item.brand + "</td>" + "<td>" + item.serialName + "</td>" + "<td>" + item.carName + "</td>" + "<td>" + item.dealer + "</td>" + "<td>" + item.appsku + "</td>" + "<td>" + item.channel + "</td>" + "<td>" + item.zt + "</td>" + "<td>&nbsp;</td>" + "<td>" + item.pagetype + "</td>" + "<td>" + item.requestTime + "</td>" + "</tr>";
                             $("#request_list_tbl").append(
                                 line);
                         });
                         $("#r_export").removeAttr("disabled");
+						$("#r_export").removeAttr("style");
                         $("#page_info").attr("style", "display:true");
                         $("#total_cnt").text("共 "　+ data.record_count + " 条");
                         $("#client_cnt").text("名单总人数： "+data.group_count+" 人");
@@ -245,8 +242,12 @@ function doSearch() {
                         }
                         else
                         {
-                        	$("#page_go").attr("style", "display:true");
-                        	$("#paging").attr("style", "display:true");
+							if (data.total_page > 1)
+							{
+								$("#page_go").attr("style", "display:true");
+								$("#paging").attr("style", "display:true");
+							}
+                        	
                         	$("#page_no").val(data.page_no);
                         	if (data.page_no == 1)
                         	{
@@ -278,6 +279,8 @@ function doSearch() {
                         
 
                     } else {
+						$("#r_export").attr("disabled", "disabled");
+						$("#r_export").attr("style", "cursor:not-allowed");
                     	$("#page_info").attr("style", "display:none");
                         $("#request_list_tbl").append(
                             emptyLine);
@@ -326,10 +329,18 @@ function loadMailList() {
             $("#mail_tbl").append("<tbody id = \"mail_list\"></tbody>");
             var length = data.length;
             if (length > 0) {
-
+//            	<tr class="text-c">
+//				<td><input type="checkbox" value="" name=""></td>
+//				<td>1</td>
+//				<td>李先生</td>
+//				<td>mr.li@163.com</td>
+//				
+//				<td class="f-14"><a title="编辑" href="javascript:;" onclick="admin_role_edit('收件人信息','admin-role-add.html','1')" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a> <a title="删除" href="javascript:;" onclick="admin_role_del(this,'1')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+//			</tr>
                 $.each(data, function(index,
                     item) {
-                    var line = "<tr>" + "<td style=\"width: 20%\"><input type=\"checkbox\" name=\"mailid\" value= \"" + item.id + "\" ></td>" + "<td style=\"width: 40%\">" + item.name + "</td>" + "<td style=\"width: 40%\">" + item.mail + "</td>" + "</tr>";
+                    var line = "<tr class=\"text-c\">" + "<td><input type=\"checkbox\" name=\"mailid\" value= \"" + item.id + "\" ></td>" + "<td>" + item.id + "</td>"+ "<td>" + item.name + "</td>" + "<td>" + item.mail + "</td>" 
+                    line = line + "<td class=\"f-14\"><a title=\"编辑\" href=\"javascript:;\" onclick=\"admin_role_edit('收件人信息','admin-role-add.html','1')\" style=\"text-decoration:none\"><i class=\"Hui-iconfont\">&#xe6df;</i></a> <a title=\"删除\" href=\"javascript:;\" onclick=\"admin_role_del(this,'1')\" class=\"ml-5\" style=\"text-decoration:none\"><i class=\"Hui-iconfont\">&#xe6e2;</i></a></td>" + "</tr>";
                     $("#mail_list").append(
                         line);
                 });
@@ -476,11 +487,17 @@ $("#delete").click(
     }
 );
 
+function cb(data)
+{
+
+}
+
 $("#add_mail").click(
     function() {
         var name = $("#name").val();
         var mail = $("#mail").val();
         $.ajax({
+        	
             url: car_price_service_domain + "api/car/config/maillist",
             type: "PUT",
             dataType: "text",
@@ -494,6 +511,9 @@ $("#add_mail").click(
         });
         $("#name").val("");
         $("#mail").val("");
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.layer.close(index);
+	
         loadMailList();
     }
 );
